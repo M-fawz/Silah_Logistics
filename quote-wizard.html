@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silah Logistics — Quick Quote Wizard</title>
+    <meta
+      name="description"
+      content="Complete three quick steps — shipment details, cargo information, and contact — to receive illustrative freight quotes."
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Kufi+Arabic:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script>
+      (function () {
+        try {
+          var l = localStorage.getItem('silah.lang');
+          if (l !== 'ar' && l !== 'en') l = 'en';
+          document.documentElement.lang = l;
+          document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body data-page="quote-wizard">
+    <div class="page-root">
+      <header class="navbar" id="site-navbar"></header>
+      <div class="shell">
+        <aside class="sidebar" id="site-sidebar"></aside>
+        <div class="shell__main">
+          <main>
+            <section class="wizard">
+              <div class="container">
+                <div class="wizard__inner">
+                  <!-- ====================== FORM VIEW ====================== -->
+                  <div id="wizard-form-view">
+                    <div class="wizard__head">
+                      <h1 data-i18n="wizard.title"></h1>
+                      <p data-i18n="wizard.subtitle"></p>
+                    </div>
+
+                    <div class="demo-banner">
+                      <span data-icon="info"></span>
+                      <span data-i18n="common.demoMode"></span>
+                    </div>
+
+                    <!-- Stepper -->
+                    <ol class="stepper" id="wizard-stepper" aria-label="Progress">
+                      <li class="stepper__step">
+                        <span class="stepper__circle">1</span>
+                        <span class="stepper__label" data-i18n="wizard.steps.shipment"></span>
+                      </li>
+                      <span class="stepper__line" aria-hidden="true"></span>
+                      <li class="stepper__step">
+                        <span class="stepper__circle">2</span>
+                        <span class="stepper__label" data-i18n="wizard.steps.cargo"></span>
+                      </li>
+                      <span class="stepper__line" aria-hidden="true"></span>
+                      <li class="stepper__step">
+                        <span class="stepper__circle">3</span>
+                        <span class="stepper__label" data-i18n="wizard.steps.contact"></span>
+                      </li>
+                    </ol>
+
+                    <form id="wizard-form" class="wizard__form" novalidate>
+                      <div class="card">
+                        <!-- ================= STEP 1: SHIPMENT ================= -->
+                        <div class="wizard-step" data-step="0">
+                          <div class="form-stack">
+                            <div class="form-row">
+                              <!-- Origin combobox -->
+                              <div class="field" data-field="origin">
+                                <label class="field__label" for="cb-origin">
+                                  <span data-i18n="wizard.shipment.origin"></span>
+                                  <span class="field__req">*</span>
+                                </label>
+                                <div class="combobox" data-combobox="origin">
+                                  <div class="combobox__field">
+                                    <span class="combobox__pin icon-sm" data-icon="map-pin"></span>
+                                    <input
+                                      id="cb-origin"
+                                      class="control combobox__input"
+                                      type="text"
+                                      role="combobox"
+                                      autocomplete="off"
+                                      aria-autocomplete="list"
+                                      aria-expanded="false"
+                                      data-i18n-ph="wizard.shipment.originPlaceholder"
+                                    />
+                                    <button
+                                      type="button"
+                                      class="combobox__clear"
+                                      hidden
+                                      data-i18n-aria="wizard.combobox.clear"
+                                    >
+                                      <span data-icon="x" class="icon-sm"></span>
+                                    </button>
+                                  </div>
+                                </div>
+                                <p class="field__error" data-error="origin"></p>
+                              </div>
+
+                              <!-- Destination combobox -->
+                              <div class="field" data-field="destination">
+                                <label class="field__label" for="cb-destination">
+                                  <span data-i18n="wizard.shipment.destination"></span>
+                                  <span class="field__req">*</span>
+                                </label>
+                                <div class="combobox" data-combobox="destination">
+                                  <div class="combobox__field">
+                                    <span class="combobox__pin icon-sm" data-icon="map-pin"></span>
+                                    <input
+                                      id="cb-destination"
+                                      class="control combobox__input"
+                                      type="text"
+                                      role="combobox"
+                                      autocomplete="off"
+                                      aria-autocomplete="list"
+                                      aria-expanded="false"
+                                      data-i18n-ph="wizard.shipment.destinationPlaceholder"
+                                    />
+                                    <button
+                                      type="button"
+                                      class="combobox__clear"
+                                      hidden
+                                      data-i18n-aria="wizard.combobox.clear"
+                                    >
+                                      <span data-icon="x" class="icon-sm"></span>
+                                    </button>
+                                  </div>
+                                </div>
+                                <p class="field__error" data-error="destination"></p>
+                              </div>
+                            </div>
+
+                            <!-- Cargo type -->
+                            <div class="field" data-field="cargoType">
+                              <label class="field__label" for="cargo-select">
+                                <span data-i18n="wizard.shipment.cargoType"></span>
+                                <span class="field__req">*</span>
+                              </label>
+                              <div class="select-wrap">
+                                <select id="cargo-select" class="control" data-cargo-select>
+                                  <option value="" disabled selected data-i18n="wizard.shipment.cargoTypeSelectLabel"></option>
+                                  <option value="fcl" data-i18n="wizard.shipment.cargoTypes.fcl"></option>
+                                  <option value="lcl" data-i18n="wizard.shipment.cargoTypes.lcl"></option>
+                                  <option value="air" data-i18n="wizard.shipment.cargoTypes.air"></option>
+                                  <option value="bulk" data-i18n="wizard.shipment.cargoTypes.bulk"></option>
+                                </select>
+                                <span class="chevron icon-sm" data-icon="chevron-down"></span>
+                              </div>
+
+                              <div class="cargo-cards">
+                                <button type="button" class="cargo-card" data-cargo="fcl" aria-pressed="false">
+                                  <span data-icon="ship" class="icon-lg"></span>
+                                  <span class="cargo-card__title" data-i18n="wizard.shipment.cargoTypes.fcl"></span>
+                                  <span class="cargo-card__desc" data-i18n="wizard.shipment.cargoTypes.fclDesc"></span>
+                                </button>
+                                <button type="button" class="cargo-card" data-cargo="lcl" aria-pressed="false">
+                                  <span data-icon="boxes" class="icon-lg"></span>
+                                  <span class="cargo-card__title" data-i18n="wizard.shipment.cargoTypes.lcl"></span>
+                                  <span class="cargo-card__desc" data-i18n="wizard.shipment.cargoTypes.lclDesc"></span>
+                                </button>
+                                <button type="button" class="cargo-card" data-cargo="air" aria-pressed="false">
+                                  <span data-icon="plane" class="icon-lg"></span>
+                                  <span class="cargo-card__title" data-i18n="wizard.shipment.cargoTypes.air"></span>
+                                  <span class="cargo-card__desc" data-i18n="wizard.shipment.cargoTypes.airDesc"></span>
+                                </button>
+                                <button type="button" class="cargo-card" data-cargo="bulk" aria-pressed="false">
+                                  <span data-icon="truck" class="icon-lg"></span>
+                                  <span class="cargo-card__title" data-i18n="wizard.shipment.cargoTypes.bulk"></span>
+                                  <span class="cargo-card__desc" data-i18n="wizard.shipment.cargoTypes.bulkDesc"></span>
+                                </button>
+                              </div>
+                              <p class="field__error" data-error="cargoType"></p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- ================== STEP 2: CARGO ================== -->
+                        <div class="wizard-step" data-step="1" hidden>
+                          <div class="form-stack">
+                            <div class="form-row">
+                              <div class="field" data-field="weight">
+                                <label class="field__label" for="weight">
+                                  <span data-i18n="wizard.cargo.weight"></span>
+                                  <span class="field__req">*</span>
+                                </label>
+                                <input
+                                  id="weight"
+                                  class="control"
+                                  type="number"
+                                  min="0"
+                                  data-model="weight"
+                                  data-i18n-ph="wizard.cargo.weightPlaceholder"
+                                />
+                                <p class="field__error" data-error="weight"></p>
+                              </div>
+                              <div class="field" data-field="unitType">
+                                <label class="field__label" for="unit">
+                                  <span data-i18n="wizard.cargo.unitType"></span>
+                                  <span class="field__req">*</span>
+                                </label>
+                                <div class="select-wrap">
+                                  <select id="unit" class="control" data-model="unitType">
+                                    <option value="" disabled selected data-i18n="wizard.cargo.unitType"></option>
+                                    <option value="boxes" data-i18n="wizard.cargo.unitTypes.boxes"></option>
+                                    <option value="pallets" data-i18n="wizard.cargo.unitTypes.pallets"></option>
+                                    <option value="containers" data-i18n="wizard.cargo.unitTypes.containers"></option>
+                                  </select>
+                                  <span class="chevron icon-sm" data-icon="chevron-down"></span>
+                                </div>
+                                <p class="field__error" data-error="unitType"></p>
+                              </div>
+                            </div>
+
+                            <div class="field" data-field="containerType">
+                              <label class="field__label" for="container">
+                                <span data-i18n="wizard.cargo.containerType"></span>
+                                <span class="field__req">*</span>
+                              </label>
+                              <div class="select-wrap">
+                                <select id="container" class="control" data-model="containerType">
+                                  <option value="" disabled selected data-i18n="wizard.cargo.containerType"></option>
+                                  <option value="20std" data-i18n="wizard.cargo.containerTypes.20std"></option>
+                                  <option value="40std" data-i18n="wizard.cargo.containerTypes.40std"></option>
+                                  <option value="40hc" data-i18n="wizard.cargo.containerTypes.40hc"></option>
+                                  <option value="reefer" data-i18n="wizard.cargo.containerTypes.reefer"></option>
+                                  <option value="opentop" data-i18n="wizard.cargo.containerTypes.opentop"></option>
+                                  <option value="flatrack" data-i18n="wizard.cargo.containerTypes.flatrack"></option>
+                                  <option value="isotank" data-i18n="wizard.cargo.containerTypes.isotank"></option>
+                                </select>
+                                <span class="chevron icon-sm" data-icon="chevron-down"></span>
+                              </div>
+                              <p class="field__error" data-error="containerType"></p>
+                            </div>
+
+                            <div class="field" data-field="special">
+                              <label class="field__label" for="special" data-i18n="wizard.cargo.special"></label>
+                              <textarea
+                                id="special"
+                                class="control"
+                                rows="4"
+                                data-model="special"
+                                data-i18n-ph="wizard.cargo.specialPlaceholder"
+                              ></textarea>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- ================= STEP 3: CONTACT ================= -->
+                        <div class="wizard-step" data-step="2" hidden>
+                          <div class="form-stack">
+                            <div class="form-row">
+                              <div class="field" data-field="email">
+                                <label class="field__label" for="email">
+                                  <span data-i18n="wizard.contact.email"></span>
+                                  <span class="field__req">*</span>
+                                </label>
+                                <input
+                                  id="email"
+                                  class="control"
+                                  type="email"
+                                  data-model="email"
+                                  data-i18n-ph="wizard.contact.emailPlaceholder"
+                                />
+                                <p class="field__error" data-error="email"></p>
+                              </div>
+                              <div class="field" data-field="phone">
+                                <label class="field__label" for="phone">
+                                  <span data-i18n="wizard.contact.phone"></span>
+                                  <span class="field__req">*</span>
+                                </label>
+                                <input
+                                  id="phone"
+                                  class="control"
+                                  type="tel"
+                                  data-model="phone"
+                                  data-i18n-ph="wizard.contact.phonePlaceholder"
+                                />
+                                <p class="field__error" data-error="phone"></p>
+                              </div>
+                            </div>
+                            <div class="field" data-field="date">
+                              <label class="field__label" for="date">
+                                <span data-i18n="wizard.contact.date"></span>
+                                <span class="field__req">*</span>
+                              </label>
+                              <input id="date" class="control" type="date" data-model="date" />
+                              <p class="field__error" data-error="date"></p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="wizard__nav">
+                        <button type="button" class="btn btn--ghost" id="wizard-back"></button>
+                        <button type="button" class="btn btn--primary" id="wizard-next">
+                          <span data-i18n="wizard.next"></span>
+                          <span data-icon="arrow-right" class="icon-sm rtl-flip"></span>
+                        </button>
+                        <button
+                          type="submit"
+                          class="btn btn--primary"
+                          id="wizard-submit"
+                          hidden
+                          data-i18n="wizard.getQuotes"
+                        ></button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- ===================== RESULT VIEW ===================== -->
+                  <div id="wizard-result-view" hidden></div>
+                </div>
+              </div>
+            </section>
+          </main>
+          <footer class="footer" id="site-footer"></footer>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <script src="js/icons.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/wizard.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

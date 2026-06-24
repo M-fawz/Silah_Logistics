@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silah Logistics — Your Global Logistics Connection</title>
+    <meta
+      name="description"
+      content="Silah Logistics is a smart digital marketplace connecting you with a trusted network of freight forwarders. Compare, book, and ship with confidence."
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Kufi+Arabic:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script>
+      /* Set language + direction before first paint (no flash). */
+      (function () {
+        try {
+          var l = localStorage.getItem('silah.lang');
+          if (l !== 'ar' && l !== 'en') l = 'en';
+          document.documentElement.lang = l;
+          document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body data-page="home">
+    <div class="page-root">
+      <header class="navbar" id="site-navbar"></header>
+      <div class="shell">
+        <aside class="sidebar" id="site-sidebar"></aside>
+        <div class="shell__main">
+          <main>
+            <!-- ============================ HERO ============================ -->
+            <section class="hero">
+              <video
+                class="hero__video"
+                autoplay
+                muted
+                loop
+                playsinline
+                poster="assets/port-night.jpg"
+                aria-hidden="true"
+              >
+                <source src="assets/intro.mp4" type="video/mp4" />
+              </video>
+              <div class="hero__overlay"></div>
+              <div class="container">
+                <div class="hero__inner">
+                  <span class="eyebrow reveal" data-i18n="common.tagline"></span>
+                  <h1 class="reveal" data-delay="0.08" data-i18n="home.hero.title"></h1>
+                  <p
+                    class="hero__subtitle reveal"
+                    data-delay="0.16"
+                    data-i18n="home.hero.subtitle"
+                  ></p>
+                  <div class="hero__cta reveal" data-delay="0.24">
+                    <a class="btn btn--primary btn--lg" href="quote-start.html">
+                      <span data-i18n="common.getAQuote"></span>
+                      <span data-icon="arrow-right" class="rtl-flip"></span>
+                    </a>
+                    <a
+                      class="btn btn--white btn--lg"
+                      href="how-it-works.html"
+                      data-i18n="common.explorePlatform"
+                    ></a>
+                  </div>
+                  <div class="hero__pills reveal" data-delay="0.32">
+                    <span class="pill">
+                      <span data-icon="ship" class="icon-sm"></span>
+                      <span data-i18n="home.hero.pills.forwarders"></span>
+                    </span>
+                    <span class="pill">
+                      <span data-icon="globe-2" class="icon-sm"></span>
+                      <span data-i18n="home.hero.pills.countries"></span>
+                    </span>
+                    <span class="pill">
+                      <span data-icon="headset" class="icon-sm"></span>
+                      <span data-i18n="home.hero.pills.support"></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============================ STATS =========================== -->
+            <section class="section section--surface">
+              <div class="container">
+                <div class="section-head reveal">
+                  <span class="eyebrow" data-i18n="home.stats.eyebrow"></span>
+                  <h2 class="mt-4" data-i18n="home.stats.title"></h2>
+                </div>
+                <div class="grid stats-grid mt-12">
+                  <div class="card stat-card reveal">
+                    <div class="stat-value countup" data-value="10000" data-suffix="+"></div>
+                    <p class="stat-label" data-i18n="home.stats.activeShippers"></p>
+                  </div>
+                  <div class="card stat-card reveal" data-delay="0.08">
+                    <div class="stat-value countup" data-value="500" data-suffix="+"></div>
+                    <p class="stat-label" data-i18n="home.stats.verifiedForwarders"></p>
+                  </div>
+                  <div class="card stat-card reveal" data-delay="0.16">
+                    <div class="stat-value countup" data-value="77" data-suffix="+"></div>
+                    <p class="stat-label" data-i18n="home.stats.countriesServed"></p>
+                  </div>
+                  <div class="card stat-card reveal" data-delay="0.24">
+                    <div
+                      class="stat-value countup"
+                      data-value="99.9"
+                      data-decimals="1"
+                      data-suffix="%"
+                    ></div>
+                    <p class="stat-label" data-i18n="home.stats.uptime"></p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- =========================== ABOUT ============================ -->
+            <section class="section section--white">
+              <div class="container">
+                <div class="split">
+                  <div class="reveal reveal--right">
+                    <span class="eyebrow" data-i18n="home.about.eyebrow"></span>
+                    <h2 class="about__title mt-4" data-i18n="home.about.title"></h2>
+                    <p class="about__body" data-i18n="home.about.body"></p>
+                    <ul class="checklist">
+                      <li>
+                        <span data-icon="check-circle"></span>
+                        <span data-i18n="home.about.points.one"></span>
+                      </li>
+                      <li>
+                        <span data-icon="check-circle"></span>
+                        <span data-i18n="home.about.points.two"></span>
+                      </li>
+                      <li>
+                        <span data-icon="check-circle"></span>
+                        <span data-i18n="home.about.points.three"></span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="reveal reveal--left">
+                    <div class="media-frame">
+                      <img src="assets/bg-ship.png" alt="" loading="lazy" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ========================= WHY CHOOSE ========================= -->
+            <section class="section section--surface">
+              <div class="container">
+                <div class="section-head reveal">
+                  <span class="eyebrow" data-i18n="home.whyChoose.eyebrow"></span>
+                  <h2 class="mt-4" data-i18n="home.whyChoose.title"></h2>
+                </div>
+                <div class="grid grid-3 mt-12">
+                  <div class="card card--hover reveal">
+                    <span class="icon-box icon-box--navy-soft">
+                      <span data-icon="zap" class="icon-lg"></span>
+                    </span>
+                    <h3 class="feature-title" data-i18n="home.whyChoose.cards.instantQuotes.title"></h3>
+                    <p class="feature-desc" data-i18n="home.whyChoose.cards.instantQuotes.desc"></p>
+                  </div>
+                  <div class="card card--hover reveal" data-delay="0.1">
+                    <span class="icon-box icon-box--navy-soft">
+                      <span data-icon="radar" class="icon-lg"></span>
+                    </span>
+                    <h3 class="feature-title" data-i18n="home.whyChoose.cards.realTimeTracking.title"></h3>
+                    <p class="feature-desc" data-i18n="home.whyChoose.cards.realTimeTracking.desc"></p>
+                  </div>
+                  <div class="card card--hover reveal" data-delay="0.2">
+                    <span class="icon-box icon-box--navy-soft">
+                      <span data-icon="headset" class="icon-lg"></span>
+                    </span>
+                    <h3 class="feature-title" data-i18n="home.whyChoose.cards.support.title"></h3>
+                    <p class="feature-desc" data-i18n="home.whyChoose.cards.support.desc"></p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ======================== HOW IT WORKS ======================== -->
+            <section class="section section--white">
+              <div class="container">
+                <div class="section-head reveal">
+                  <span class="eyebrow" data-i18n="home.howItWorks.eyebrow"></span>
+                  <h2 class="mt-4" data-i18n="home.howItWorks.title"></h2>
+                </div>
+                <div class="grid grid-3 mt-12">
+                  <div class="step-card reveal">
+                    <span class="step-card__num">1</span>
+                    <span class="icon-box icon-box--red-soft">
+                      <span data-icon="file-text" class="icon-lg"></span>
+                    </span>
+                    <h3 class="feature-title" data-i18n="home.howItWorks.steps.one.title"></h3>
+                    <p class="feature-desc" data-i18n="home.howItWorks.steps.one.desc"></p>
+                  </div>
+                  <div class="step-card reveal" data-delay="0.1">
+                    <span class="step-card__num">2</span>
+                    <span class="icon-box icon-box--red-soft">
+                      <span data-icon="package-search" class="icon-lg"></span>
+                    </span>
+                    <h3 class="feature-title" data-i18n="home.howItWorks.steps.two.title"></h3>
+                    <p class="feature-desc" data-i18n="home.howItWorks.steps.two.desc"></p>
+                  </div>
+                  <div class="step-card reveal" data-delay="0.2">
+                    <span class="step-card__num">3</span>
+                    <span class="icon-box icon-box--red-soft">
+                      <span data-icon="radar" class="icon-lg"></span>
+                    </span>
+                    <h3 class="feature-title" data-i18n="home.howItWorks.steps.three.title"></h3>
+                    <p class="feature-desc" data-i18n="home.howItWorks.steps.three.desc"></p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ======================= GLOBAL NETWORK ======================= -->
+            <section class="network">
+              <img class="network__bg" src="assets/bg-network.png" alt="" loading="lazy" />
+              <div class="network__overlay"></div>
+              <div class="container network__inner">
+                <div class="section-head invert reveal">
+                  <span class="eyebrow" data-i18n="home.network.eyebrow"></span>
+                  <h2 class="mt-4" data-i18n="home.network.title"></h2>
+                  <p class="section-head__subtitle" data-i18n="home.network.subtitle"></p>
+                </div>
+                <div class="network__metrics">
+                  <div class="metric-card reveal">
+                    <div class="stat-value countup" data-value="250" data-suffix="+"></div>
+                    <p class="stat-label" data-i18n="home.network.metrics.ports"></p>
+                  </div>
+                  <div class="metric-card reveal" data-delay="0.1">
+                    <div class="stat-value countup" data-value="1200" data-suffix="+"></div>
+                    <p class="stat-label" data-i18n="home.network.metrics.lanes"></p>
+                  </div>
+                  <div class="metric-card reveal" data-delay="0.2">
+                    <div class="stat-value countup" data-value="500" data-suffix="+"></div>
+                    <p class="stat-label" data-i18n="home.network.metrics.partners"></p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ========================= TESTIMONIAL ======================== -->
+            <section class="section section--surface">
+              <div class="container">
+                <div class="card testimonial reveal">
+                  <span class="quote-icon" data-icon="quote"></span>
+                  <blockquote>“<span data-i18n="home.testimonial.quote"></span>”</blockquote>
+                  <p class="testimonial__name" data-i18n="home.testimonial.name"></p>
+                  <p class="testimonial__role" data-i18n="home.testimonial.role"></p>
+                </div>
+              </div>
+            </section>
+
+            <!-- ========================== FINAL CTA ========================= -->
+            <section class="section section--navy">
+              <div class="container">
+                <div class="cta-block reveal">
+                  <span class="trial-badge" data-i18n="home.finalCta.trialBadge"></span>
+                  <h2 data-i18n="home.finalCta.title"></h2>
+                  <p class="cta-block__subtitle" data-i18n="home.finalCta.subtitle"></p>
+                  <div class="cta-block__actions">
+                    <a class="btn btn--primary btn--lg" href="#" data-stub data-i18n="home.finalCta.primary"></a>
+                    <a class="btn btn--white btn--lg" href="quote-start.html" data-i18n="home.finalCta.secondary"></a>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+          <footer class="footer" id="site-footer"></footer>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <script src="js/icons.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/wizard.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

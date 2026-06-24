@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silah Logistics — How It Works</title>
+    <meta
+      name="description"
+      content="From your first request to final delivery, Silah brings forwarders, customs, and warehousing onto a single transparent platform."
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Kufi+Arabic:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script>
+      (function () {
+        try {
+          var l = localStorage.getItem('silah.lang');
+          if (l !== 'ar' && l !== 'en') l = 'en';
+          document.documentElement.lang = l;
+          document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body data-page="how-it-works">
+    <div class="page-root">
+      <header class="navbar" id="site-navbar"></header>
+      <div class="shell">
+        <aside class="sidebar" id="site-sidebar"></aside>
+        <div class="shell__main">
+          <main>
+            <!-- =========================== HERO ============================ -->
+            <section class="page-hero">
+              <img class="page-hero__bg" src="assets/port-night.jpg" alt="" />
+              <div class="page-hero__overlay"></div>
+              <div class="container">
+                <div class="page-hero__inner reveal">
+                  <span class="eyebrow" data-i18n="howItWorks.hero.eyebrow"></span>
+                  <h1 class="mt-4" data-i18n="howItWorks.hero.title"></h1>
+                  <p class="page-hero__subtitle" data-i18n="howItWorks.hero.subtitle"></p>
+                </div>
+              </div>
+            </section>
+
+            <!-- ======================= CORE SERVICES ======================= -->
+            <section class="section section--white">
+              <div class="container">
+                <div class="section-head reveal">
+                  <span class="eyebrow" data-i18n="howItWorks.services.eyebrow"></span>
+                  <h2 class="mt-4" data-i18n="howItWorks.services.title"></h2>
+                </div>
+                <div class="grid grid-3 mt-12">
+                  <div class="card card--hover reveal">
+                    <span class="icon-box icon-box--navy">
+                      <span data-icon="ship" class="icon-lg"></span>
+                    </span>
+                    <h3 class="feature-title" data-i18n="howItWorks.services.items.freight.title"></h3>
+                    <p class="feature-desc" data-i18n="howItWorks.services.items.freight.desc"></p>
+                  </div>
+                  <div class="card card--hover reveal" data-delay="0.1">
+                    <span class="icon-box icon-box--navy">
+                      <span data-icon="package" class="icon-lg"></span>
+                    </span>
+                    <h3 class="feature-title" data-i18n="howItWorks.services.items.customs.title"></h3>
+                    <p class="feature-desc" data-i18n="howItWorks.services.items.customs.desc"></p>
+                  </div>
+                  <div class="card card--hover reveal" data-delay="0.2">
+                    <span class="icon-box icon-box--navy">
+                      <span data-icon="boxes" class="icon-lg"></span>
+                    </span>
+                    <h3 class="feature-title" data-i18n="howItWorks.services.items.warehousing.title"></h3>
+                    <p class="feature-desc" data-i18n="howItWorks.services.items.warehousing.desc"></p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ===================== END-TO-END PROCESS ===================== -->
+            <section class="section section--surface">
+              <div class="container">
+                <div class="section-head reveal">
+                  <span class="eyebrow" data-i18n="howItWorks.process.eyebrow"></span>
+                  <h2 class="mt-4" data-i18n="howItWorks.process.title"></h2>
+                </div>
+                <div class="grid grid-4 mt-12">
+                  <div class="process-card reveal">
+                    <div class="process-card__top">
+                      <span class="icon-box icon-box--red-soft">
+                        <span data-icon="user-plus" class="icon-lg"></span>
+                      </span>
+                      <span class="process-card__num">1</span>
+                    </div>
+                    <h3 data-i18n="howItWorks.process.steps.account.title"></h3>
+                    <p data-i18n="howItWorks.process.steps.account.desc"></p>
+                  </div>
+                  <div class="process-card reveal" data-delay="0.08">
+                    <div class="process-card__top">
+                      <span class="icon-box icon-box--red-soft">
+                        <span data-icon="send" class="icon-lg"></span>
+                      </span>
+                      <span class="process-card__num">2</span>
+                    </div>
+                    <h3 data-i18n="howItWorks.process.steps.request.title"></h3>
+                    <p data-i18n="howItWorks.process.steps.request.desc"></p>
+                  </div>
+                  <div class="process-card reveal" data-delay="0.16">
+                    <div class="process-card__top">
+                      <span class="icon-box icon-box--red-soft">
+                        <span data-icon="clipboard-check" class="icon-lg"></span>
+                      </span>
+                      <span class="process-card__num">3</span>
+                    </div>
+                    <h3 data-i18n="howItWorks.process.steps.quotes.title"></h3>
+                    <p data-i18n="howItWorks.process.steps.quotes.desc"></p>
+                  </div>
+                  <div class="process-card reveal" data-delay="0.24">
+                    <div class="process-card__top">
+                      <span class="icon-box icon-box--red-soft">
+                        <span data-icon="radar" class="icon-lg"></span>
+                      </span>
+                      <span class="process-card__num">4</span>
+                    </div>
+                    <h3 data-i18n="howItWorks.process.steps.track.title"></h3>
+                    <p data-i18n="howItWorks.process.steps.track.desc"></p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ========================= WHY CHOOSE ========================= -->
+            <section class="section section--white">
+              <div class="container">
+                <div class="section-head reveal">
+                  <span class="eyebrow" data-i18n="howItWorks.whyChoose.eyebrow"></span>
+                  <h2 class="mt-4" data-i18n="howItWorks.whyChoose.title"></h2>
+                </div>
+                <div class="grid grid-4 mt-12">
+                  <div class="why-card reveal">
+                    <span class="icon-box icon-box--navy-soft">
+                      <span data-icon="tags" class="icon-lg"></span>
+                    </span>
+                    <h3 data-i18n="howItWorks.whyChoose.items.pricing.title"></h3>
+                    <p data-i18n="howItWorks.whyChoose.items.pricing.desc"></p>
+                  </div>
+                  <div class="why-card reveal" data-delay="0.08">
+                    <span class="icon-box icon-box--navy-soft">
+                      <span data-icon="shield-check" class="icon-lg"></span>
+                    </span>
+                    <h3 data-i18n="howItWorks.whyChoose.items.secure.title"></h3>
+                    <p data-i18n="howItWorks.whyChoose.items.secure.desc"></p>
+                  </div>
+                  <div class="why-card reveal" data-delay="0.16">
+                    <span class="icon-box icon-box--navy-soft">
+                      <span data-icon="clock" class="icon-lg"></span>
+                    </span>
+                    <h3 data-i18n="howItWorks.whyChoose.items.fast.title"></h3>
+                    <p data-i18n="howItWorks.whyChoose.items.fast.desc"></p>
+                  </div>
+                  <div class="why-card reveal" data-delay="0.24">
+                    <span class="icon-box icon-box--navy-soft">
+                      <span data-icon="globe-2" class="icon-lg"></span>
+                    </span>
+                    <h3 data-i18n="howItWorks.whyChoose.items.global.title"></h3>
+                    <p data-i18n="howItWorks.whyChoose.items.global.desc"></p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============================= CTA ============================ -->
+            <section class="section section--navy">
+              <div class="container">
+                <div class="cta-block reveal">
+                  <h2 data-i18n="howItWorks.cta.title"></h2>
+                  <p class="cta-block__subtitle" data-i18n="howItWorks.cta.subtitle"></p>
+                  <div class="cta-block__actions">
+                    <a class="btn btn--primary btn--lg" href="#" data-stub data-i18n="howItWorks.cta.primary"></a>
+                    <a class="btn btn--white btn--lg" href="quote-start.html">
+                      <span data-i18n="howItWorks.cta.secondary"></span>
+                      <span data-icon="arrow-right" class="rtl-flip"></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+          <footer class="footer" id="site-footer"></footer>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <script src="js/icons.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/wizard.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

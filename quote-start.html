@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silah Logistics — Get Your Shipping Quote</title>
+    <meta
+      name="description"
+      content="Answer a few quick questions and receive comparable quotes from our network of verified freight forwarders."
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Kufi+Arabic:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script>
+      (function () {
+        try {
+          var l = localStorage.getItem('silah.lang');
+          if (l !== 'ar' && l !== 'en') l = 'en';
+          document.documentElement.lang = l;
+          document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body data-page="quote-start">
+    <div class="page-root">
+      <header class="navbar" id="site-navbar"></header>
+      <div class="shell">
+        <aside class="sidebar" id="site-sidebar"></aside>
+        <div class="shell__main">
+          <main>
+            <section class="section section--surface">
+              <div class="container">
+                <div class="split">
+                  <div class="reveal reveal--right">
+                    <span class="eyebrow" data-i18n="quickStart.eyebrow"></span>
+                    <h1 class="qstart__title mt-4" data-i18n="quickStart.title"></h1>
+                    <p class="qstart__subtitle" data-i18n="quickStart.subtitle"></p>
+                    <div class="qstart__actions">
+                      <a class="btn btn--primary btn--lg" href="quote-wizard.html">
+                        <span data-i18n="quickStart.startWizard"></span>
+                        <span data-icon="arrow-right" class="rtl-flip"></span>
+                      </a>
+                      <a
+                        class="btn btn--secondary btn--lg"
+                        href="#"
+                        data-stub
+                        data-i18n="quickStart.createAccount"
+                      ></a>
+                    </div>
+                  </div>
+
+                  <div class="reveal reveal--left">
+                    <div class="card">
+                      <h2 class="qstart__benefits-title" data-i18n="quickStart.benefitsTitle"></h2>
+                      <ul class="checklist">
+                        <li>
+                          <span data-icon="check-circle"></span>
+                          <span data-i18n="quickStart.benefits.one"></span>
+                        </li>
+                        <li>
+                          <span data-icon="check-circle"></span>
+                          <span data-i18n="quickStart.benefits.two"></span>
+                        </li>
+                        <li>
+                          <span data-icon="check-circle"></span>
+                          <span data-i18n="quickStart.benefits.three"></span>
+                        </li>
+                        <li>
+                          <span data-icon="check-circle"></span>
+                          <span data-i18n="quickStart.benefits.four"></span>
+                        </li>
+                      </ul>
+                      <div class="qstart__ministats">
+                        <div class="qstart__ministat">
+                          <div class="stat-value countup" data-value="5"></div>
+                          <p data-i18n="quickStart.stats.minutes"></p>
+                        </div>
+                        <div class="qstart__ministat">
+                          <div class="stat-value countup" data-value="500" data-suffix="+"></div>
+                          <p data-i18n="quickStart.stats.forwarders"></p>
+                        </div>
+                        <div class="qstart__ministat">
+                          <div class="stat-value countup" data-value="77" data-suffix="+"></div>
+                          <p data-i18n="quickStart.stats.countries"></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+          <footer class="footer" id="site-footer"></footer>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <script src="js/icons.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/wizard.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
