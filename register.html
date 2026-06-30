@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silah Logistics — Create Account</title>
+    <meta
+      name="description"
+      content="Create your free Silah Logistics account to request quotes, compare verified forwarders, and track every shipment in one place."
+    />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Kufi+Arabic:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <script>
+      (function () {
+        try {
+          var l = localStorage.getItem('silah.lang');
+          if (l !== 'ar' && l !== 'en') l = 'en';
+          document.documentElement.lang = l;
+          document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body data-page="register">
+    <div class="page-root">
+      <header class="navbar" id="site-navbar"></header>
+      <div class="shell">
+        <aside class="sidebar" id="site-sidebar"></aside>
+        <div class="shell__main">
+          <main>
+            <section class="stub">
+              <div class="container">
+                <div class="stub__inner reveal">
+                  <span class="stub__icon">
+                    <span data-icon="user-plus" class="icon-lg"></span>
+                  </span>
+                  <span class="eyebrow mt-4" data-i18n="register.eyebrow"></span>
+                  <h1 data-i18n="register.title"></h1>
+                  <p data-i18n="register.subtitle"></p>
+                  <div class="cta-block__actions">
+                    <a class="btn btn--primary btn--lg" href="quote-start.html">
+                      <span data-i18n="register.cta"></span>
+                      <span data-icon="arrow-right" class="rtl-flip"></span>
+                    </a>
+                    <a class="btn btn--secondary btn--lg" href="index.html">
+                      <span data-icon="arrow-left" class="rtl-flip"></span>
+                      <span data-i18n="common.backHome"></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+          <footer class="footer" id="site-footer"></footer>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <script src="js/icons.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/wizard.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

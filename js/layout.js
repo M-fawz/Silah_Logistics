@@ -24,11 +24,7 @@
             '<span data-icon="globe" class="icon icon-sm"></span>' +
             '<span data-lang-label></span>' +
           '</button>' +
-          '<a class="navbar__login" href="#" data-stub>' +
-            '<span data-icon="log-in" class="icon icon-sm"></span>' +
-            '<span data-i18n="common.login"></span>' +
-          '</a>' +
-          '<a class="btn btn--primary btn--sm" href="#" data-stub data-i18n="common.register"></a>' +
+          '<a class="btn btn--primary btn--sm" href="register.html" data-i18n="common.register"></a>' +
         '</div>' +
       '</div>'
     );
@@ -58,13 +54,16 @@
         '<div class="sidebar__group">' +
           '<p class="sidebar__grouplabel" data-i18n="sidebar.quickQuote"></p>' +
           sidebarLink('quote-start.html', 'getQuote', 'file-plus', 'sidebar.getQuote', activeNav, false) +
-          sidebarLink('#', 'viewRates', 'bar-chart', 'sidebar.viewRates', activeNav, true) +
         '</div>' +
         '<div class="sidebar__group">' +
           '<p class="sidebar__grouplabel" data-i18n="sidebar.navigation"></p>' +
-          sidebarLink('#', 'tracking', 'radar', 'sidebar.carrierTracking', activeNav, true) +
           sidebarLink('how-it-works.html', 'services', 'layers', 'sidebar.services', activeNav, false) +
-          sidebarLink('#', 'myQuotes', 'clipboard-list', 'sidebar.myQuotes', activeNav, true) +
+          sidebarLink('about.html', 'about', 'info', 'sidebar.about', activeNav, false) +
+        '</div>' +
+        '<div class="sidebar__group">' +
+          '<p class="sidebar__grouplabel" data-i18n="sidebar.legal"></p>' +
+          sidebarLink('privacy.html', 'privacy', 'shield-check', 'sidebar.privacy', activeNav, false) +
+          sidebarLink('terms.html', 'terms', 'file-text', 'sidebar.terms', activeNav, false) +
         '</div>' +
       '</nav>' +
       '<div class="sidebar__foot" data-i18n="common.demoMode"></div>'
@@ -92,17 +91,16 @@
     var product = footerCol('footer.product', [
       { href: 'how-it-works.html', key: 'footer.links.services' },
       { href: 'quote-start.html', key: 'footer.links.quickQuote' },
-      { href: '#', key: 'footer.links.tracking', stub: true },
       { href: '#', key: 'footer.links.rates', stub: true }
     ]);
     var company = footerCol('footer.company', [
-      { href: 'how-it-works.html', key: 'footer.links.about' },
+      { href: 'about.html', key: 'footer.links.about' },
       { href: '#', key: 'footer.links.careers', stub: true },
       { href: '#', key: 'footer.links.contact', stub: true }
     ]);
     var legal = footerCol('footer.legal', [
-      { href: '#', key: 'footer.links.privacy', stub: true },
-      { href: '#', key: 'footer.links.terms', stub: true },
+      { href: 'privacy.html', key: 'footer.links.privacy' },
+      { href: 'terms.html', key: 'footer.links.terms' },
       { href: '#', key: 'footer.links.cookies', stub: true }
     ]);
 
@@ -132,7 +130,10 @@
     home: '',
     'how-it-works': 'services',
     'quote-start': 'getQuote',
-    'quote-wizard': 'getQuote'
+    'quote-wizard': 'getQuote',
+    about: 'about',
+    privacy: 'privacy',
+    terms: 'terms'
   };
 
   function render() {

@@ -271,8 +271,13 @@ html[dir='rtl'] .rtl-flip {
   align-items: center;
   gap: 0.5rem;
 }
+/* Allow the brand lockup to shrink instead of overflowing on small screens */
+.navbar__left {
+  min-width: 0;
+}
 .navbar__right {
   gap: 0.5rem;
+  flex-shrink: 0;
 }
 .hamburger {
   display: inline-flex;
@@ -291,16 +296,33 @@ html[dir='rtl'] .rtl-flip {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  min-width: 0;
 }
 .brand__symbol {
   height: 2.25rem;
   width: 2.25rem;
   object-fit: contain;
+  /* The wordmark already includes the chain symbol, so the standalone symbol
+     stays hidden — showing both would duplicate the icon. */
+  display: none;
 }
+/* Full logo lockup (symbol + name) shows on mobile too — same as desktop —
+   sized down so it fits the header, and allowed to shrink before it overflows. */
 .brand__wordmark {
-  height: 2.25rem;
+  height: 1.75rem;
   width: auto;
+  max-width: 100%;
+  min-width: 0;
   object-fit: contain;
+  object-position: left center;
+  display: block;
+}
+html[dir='rtl'] .brand__wordmark {
+  object-position: right center;
+}
+/* Language label is hidden on small screens (globe icon only) to make room
+   for the brand name; restored at >=640px. */
+.lang-toggle [data-lang-label] {
   display: none;
 }
 .navbar__login {
@@ -1543,6 +1565,99 @@ textarea.control {
   margin-top: 2rem;
 }
 
+/* ============================= LEGAL ============================ */
+.legal {
+  background: var(--surface);
+}
+/* Legal copy is English-only — keep it LTR even when the site is in RTL. */
+.legal__inner {
+  max-width: 56rem;
+  margin-inline: auto;
+  padding-block: 3rem;
+  direction: ltr;
+  text-align: left;
+}
+.legal__title {
+  font-size: clamp(1.875rem, 1.4rem + 1.8vw, 2.5rem);
+}
+.legal__date {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.legal__toc {
+  margin-top: 2rem;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--slate-100);
+  background: #fff;
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem;
+}
+.legal__toc-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--navy);
+}
+.legal__toc ol {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.5rem 1.5rem;
+  grid-template-columns: 1fr;
+  list-style: none;
+}
+.legal__toc a {
+  font-size: 0.9375rem;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.legal__toc a:hover {
+  color: var(--brand-red);
+}
+.legal__article {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.legal__section {
+  scroll-margin-top: calc(var(--navbar-h) + 1rem);
+}
+.legal__section h2 {
+  font-size: 1.25rem;
+  color: var(--navy);
+}
+.legal__section p {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+.legal__list {
+  margin-top: 0.75rem;
+  list-style: disc;
+  padding-inline-start: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.legal__list li {
+  color: var(--muted);
+  line-height: 1.7;
+}
+.legal__list li strong {
+  color: var(--navy);
+  font-weight: 700;
+}
+.legal__note {
+  font-weight: 600;
+  color: var(--navy);
+}
+.legal__back {
+  margin-top: 2.5rem;
+}
+
 /* ============================= TOAST ============================ */
 .toast {
   position: fixed;
@@ -1618,6 +1733,10 @@ textarea.control {
   }
   .brand__wordmark {
     display: block;
+    height: 2.25rem;
+  }
+  .lang-toggle [data-lang-label] {
+    display: inline;
   }
   .navbar__login {
     display: inline-flex;
@@ -1641,6 +1760,9 @@ textarea.control {
   }
   .summary__grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+  .legal__toc ol {
+    grid-template-columns: 1fr 1fr;
   }
   .stepper__step {
     flex: 0 0 auto;

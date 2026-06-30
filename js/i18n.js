@@ -22,7 +22,6 @@
       common: {
         appName: 'Silah Logistics',
         tagline: 'Connect, Quote, Ship',
-        login: 'Login',
         register: 'Register',
         getQuote: 'Get a Quote',
         getAQuote: 'Get a Quote',
@@ -47,11 +46,12 @@
       sidebar: {
         quickQuote: 'Quick Quote',
         getQuote: 'Get Quote',
-        viewRates: 'View Rates',
-        carrierTracking: 'Carrier Tracking',
         services: 'Services',
-        myQuotes: 'My Quotes',
-        navigation: 'Navigation'
+        about: 'About',
+        navigation: 'Navigation',
+        legal: 'Legal',
+        privacy: 'Privacy Policy',
+        terms: 'Terms of Use'
       },
       home: {
         hero: {
@@ -251,6 +251,79 @@
           countries: 'Countries served'
         }
       },
+      register: {
+        eyebrow: 'Create Account',
+        title: 'Create Your Free Account',
+        subtitle:
+          'Join Silah Logistics to request quotes, compare verified forwarders, and track every shipment in one place. Start your free 3-month trial — no credit card required.',
+        cta: 'Start Quick Quote'
+      },
+      about: {
+        hero: {
+          eyebrow: 'About Silah Logistics',
+          headline: 'We’re redefining how logistics connections are made.',
+          cta: 'Start Shipping'
+        },
+        who: {
+          eyebrow: 'Who We Are',
+          title: 'A smarter way to connect freight',
+          body:
+            'At Silah Logistics, we’re redefining how logistics connections are made in a fast-moving, highly competitive global trade environment. Built on more than 20 years of experience, our platform was created with a clear vision: to simplify, accelerate, and improve the way businesses reach logistics solutions.'
+        },
+        vision: {
+          eyebrow: 'Our Vision',
+          title: 'A true logistics connection',
+          body:
+            'Silah Logistics was born from its founders’ vision and deep understanding of the logistics landscape — a recognition of the growing complexity, inefficiencies, and challenges businesses face in a rapidly evolving global trade environment. That vision inspired the creation of a smarter, more transparent way to connect customers with logistics service providers: a true logistics connection.'
+        },
+        what: {
+          eyebrow: 'What We Do',
+          title: 'A smart digital marketplace',
+          body:
+            'Silah Logistics is a smart digital marketplace that seamlessly connects customers with a vast network of trusted freight forwarders and logistics providers. By bringing multiple providers together on a single platform, we empower businesses to compare competitive offers, evaluate options transparently, and make informed decisions with confidence.'
+        },
+        why: {
+          eyebrow: 'Why It Matters',
+          title: 'Built to remove complexity',
+          body:
+            'We understand the challenges businesses face when searching for reliable, cost-effective shipping solutions. That’s why our platform is designed to remove complexity, save time, and drive efficiency — helping businesses secure the best logistics value without compromising on quality or reliability.'
+        },
+        commitment: {
+          eyebrow: 'Our Commitment',
+          title: 'Opportunity for every partner',
+          body:
+            'At our core, Silah Logistics is about creating opportunities — enabling logistics providers to expand their reach while giving customers access to a broader, more competitive market. We’re committed to innovation, transparency, and performance, shaping the future of logistics through smarter connections.'
+        },
+        values: {
+          eyebrow: 'Our Values',
+          title: 'What we believe in',
+          subtitle:
+            'Four principles guide every feature we ship and every partnership we build.',
+          items: {
+            innovation: {
+              title: 'Innovation',
+              desc: 'We continuously improve the shipping experience through technology.'
+            },
+            transparency: {
+              title: 'Transparency',
+              desc: 'Clear pricing, open commission, and honest partnerships.'
+            },
+            performance: {
+              title: 'Performance',
+              desc: 'Reliable delivery, measurable results, and no surprises.'
+            },
+            reliability: {
+              title: 'Reliability',
+              desc: 'Trusted agents and 24/7 support for every shipment.'
+            }
+          }
+        },
+        finalCta: {
+          title: 'Join the Silah Logistics network',
+          subtitle: 'Whether you’re a shipper or a carrier — we built this for you.',
+          cta: 'Start Shipping'
+        }
+      },
       wizard: {
         title: 'Get Your Shipping Quote',
         subtitle: 'Complete the steps below to receive your quotes.',
@@ -350,13 +423,12 @@
         links: {
           services: 'Services',
           quickQuote: 'Quick Quote',
-          tracking: 'Carrier Tracking',
           rates: 'View Rates',
           about: 'About',
           careers: 'Careers',
           contact: 'Contact',
           privacy: 'Privacy Policy',
-          terms: 'Terms of Service',
+          terms: 'Terms of Use',
           cookies: 'Cookie Policy'
         },
         rights: 'All rights reserved.',
@@ -368,7 +440,6 @@
       common: {
         appName: 'صلة للخدمات اللوجستية',
         tagline: 'تواصل، سعّر، اشحن',
-        login: 'تسجيل الدخول',
         register: 'إنشاء حساب',
         getQuote: 'احصل على عرض سعر',
         getAQuote: 'احصل على عرض سعر',
@@ -392,11 +463,12 @@
       sidebar: {
         quickQuote: 'تسعير سريع',
         getQuote: 'احصل على عرض',
-        viewRates: 'عرض الأسعار',
-        carrierTracking: 'تتبّع الشحنة',
         services: 'الخدمات',
-        myQuotes: 'عروضي',
-        navigation: 'التنقّل'
+        about: 'من نحن',
+        navigation: 'التنقّل',
+        legal: 'قانوني',
+        privacy: 'سياسة الخصوصية',
+        terms: 'شروط الاستخدام'
       },
       home: {
         hero: {
@@ -589,6 +661,78 @@
           countries: 'دول نخدمها'
         }
       },
+      register: {
+        eyebrow: 'إنشاء حساب',
+        title: 'أنشئ حسابك المجاني',
+        subtitle:
+          'انضم إلى صلة للخدمات اللوجستية لطلب عروض الأسعار ومقارنة وكلاء الشحن الموثّقين وتتبّع كل شحنة في مكان واحد. ابدأ تجربتك المجانية لمدة 3 أشهر — دون الحاجة إلى بطاقة ائتمان.',
+        cta: 'ابدأ التسعير السريع'
+      },
+      about: {
+        hero: {
+          eyebrow: 'عن Silah Logistics',
+          headline: 'نعيد تعريف كيفية إنشاء روابط اللوجستيات.',
+          cta: 'ابدأ الشحن'
+        },
+        who: {
+          eyebrow: 'من نحن',
+          title: 'طريقة أذكى لربط الشحن',
+          body:
+            'في Silah Logistics، نعيد تعريف كيفية إنشاء روابط اللوجستيات في بيئة تجارة عالمية سريعة الحركة وتنافسية للغاية. مبنية على أكثر من 20 عامًا من الخبرة، تم إنشاء منصتنا برؤية واضحة: تبسيط وتسريع وتحسين الطريقة التي تصل بها الشركات إلى الحلول اللوجستية.'
+        },
+        vision: {
+          eyebrow: 'رؤيتنا',
+          title: 'صلة لوجستية حقيقية',
+          body:
+            'Silah Logistics وُلدت من رؤية مؤسسيها وفهمهم العميق للمشهد اللوجستي — إدراكًا للتعقيدات المتزايدة وأوجه القصور والتحديات التي تواجهها الشركات في بيئة التجارة العالمية سريعة التطور. هذه الرؤية ألهمت إنشاء طريقة أكثر ذكاءً وشفافية لربط العملاء بمزودي الخدمات اللوجستية: صلة لوجستية حقيقية.'
+        },
+        what: {
+          eyebrow: 'ما نفعله',
+          title: 'سوق رقمي ذكي',
+          body:
+            'Silah Logistics هو سوق رقمي ذكي يربط العملاء بسلاسة بشبكة واسعة من وكلاء الشحن الموثوقين ومزودي الخدمات اللوجستية. من خلال جمع مزودين متعددين في منصة واحدة، نمكّن الشركات من مقارنة العروض التنافسية وتقييم الخيارات بشفافية واتخاذ قرارات مستنيرة بثقة.'
+        },
+        why: {
+          eyebrow: 'لماذا يهم',
+          title: 'مبنية لإزالة التعقيد',
+          body:
+            'نتفهم التحديات التي تواجهها الشركات عند البحث عن حلول شحن موثوقة وفعالة من حيث التكلفة. لهذا السبب صُممت منصتنا لإزالة التعقيد وتوفير الوقت وتحقيق الكفاءة — مما يساعد الشركات على تأمين أفضل قيمة لوجستية دون المساس بالجودة أو الموثوقية.'
+        },
+        commitment: {
+          eyebrow: 'التزامنا',
+          title: 'فرصة لكل شريك',
+          body:
+            'في جوهرنا، Silah Logistics يدور حول خلق الفرص — تمكين مزودي الخدمات اللوجستية من توسيع نطاق وصولهم مع إتاحة الوصول للعملاء إلى سوق أوسع وأكثر تنافسية. نحن ملتزمون بالابتكار والشفافية والأداء، نشكّل مستقبل اللوجستيات من خلال روابط لوجستية أكثر ذكاءً.'
+        },
+        values: {
+          eyebrow: 'قيمنا',
+          title: 'ما نؤمن به',
+          subtitle: 'أربعة مبادئ توجه كل ميزة نطلقها وكل شراكة نبنيها.',
+          items: {
+            innovation: {
+              title: 'الابتكار',
+              desc: 'نحسّن تجربة الشحن باستمرار من خلال التكنولوجيا.'
+            },
+            transparency: {
+              title: 'الشفافية',
+              desc: 'تسعير واضح، وعمولة مفتوحة، وشراكات صادقة.'
+            },
+            performance: {
+              title: 'الأداء',
+              desc: 'تسليم موثوق، ونتائج قابلة للقياس، بدون مفاجآت.'
+            },
+            reliability: {
+              title: 'الموثوقية',
+              desc: 'وكلاء موثوقون ودعم 24/7 لكل شحنة.'
+            }
+          }
+        },
+        finalCta: {
+          title: 'انضم إلى شبكة Silah Logistics',
+          subtitle: 'سواء كنت شاحنًا أو ناقلًا — بنينا هذا لك.',
+          cta: 'ابدأ الشحن'
+        }
+      },
       wizard: {
         title: 'احصل على عرض سعر شحنتك',
         subtitle: 'أكمل الخطوات التالية للحصول على عروضك.',
@@ -685,13 +829,12 @@
         links: {
           services: 'الخدمات',
           quickQuote: 'تسعير سريع',
-          tracking: 'تتبّع الشحنة',
           rates: 'عرض الأسعار',
           about: 'من نحن',
           careers: 'الوظائف',
           contact: 'تواصل معنا',
           privacy: 'سياسة الخصوصية',
-          terms: 'شروط الخدمة',
+          terms: 'شروط الاستخدام',
           cookies: 'سياسة ملفات الارتباط'
         },
         rights: 'جميع الحقوق محفوظة.',

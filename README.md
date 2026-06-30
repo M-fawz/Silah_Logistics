@@ -1,3 +1,4 @@
+
 # Silah Logistics — Website
 
 A production-quality, **front-end-only** marketing + quick-quote website for
@@ -17,9 +18,9 @@ backend, authentication, or payments.
 - **Animations (native)** — CSS transitions for hovers/press; a vanilla
   `IntersectionObserver` powers scroll-reveal for sections and the animated
   count-up stats (locale-aware digits). Respects `prefers-reduced-motion`.
-- **Navbar + collapsible sidebar** — logo, language toggle, Login, Register in the
-  navbar; Quick Quote (Get Quote / View Rates), Carrier Tracking, Services, and My
-  Quotes in the sidebar, with a red start-side accent bar on the active route.
+- **Navbar + collapsible sidebar** — logo, language toggle, and Register in the
+  navbar; Quick Quote (Get Quote), Services, About, and Legal (Privacy Policy /
+  Terms of Use) in the sidebar, with a red start-side accent bar on the active route.
 - **Quick Quote wizard** — a 3-step wizard (numbered stepper: gray → navy active →
   green completed) with searchable seaport comboboxes (keyboard accessible),
   cargo-type cards, cargo details, validation, and a mocked quote result. Runs in
@@ -59,10 +60,14 @@ Then open <http://localhost:8000/>.
 | -------------------- | ------------------------------------------------- |
 | `index.html`         | Home (hero video, stats, about, why-choose, etc.) |
 | `how-it-works.html`  | Services / How Silah Logistics Works              |
+| `about.html`         | About Silah Logistics (bilingual EN/AR)           |
+| `privacy.html`       | Privacy Policy (English-only legal page)          |
+| `terms.html`         | Terms of Use (English-only legal page)            |
 | `quote-start.html`   | Quick Quote intro                                 |
 | `quote-wizard.html`  | 3-step Quick Quote wizard                         |
+| `register.html`      | Create Account (placeholder)                      |
 
-Login, Register, View Rates, Carrier Tracking, and My Quotes are intentionally
+View Rates, Careers, Contact, and Cookie Policy remain intentionally
 **non-functional stub links** (they show a "coming soon" toast).
 
 ## 📁 Project Structure
@@ -71,8 +76,12 @@ Login, Register, View Rates, Carrier Tracking, and My Quotes are intentionally
 .
 ├── index.html              # Home
 ├── how-it-works.html       # Services / How it works
+├── about.html              # About (bilingual)
+├── privacy.html            # Privacy Policy (English-only legal page)
+├── terms.html              # Terms of Use (English-only legal page)
 ├── quote-start.html        # Quick Quote intro
 ├── quote-wizard.html       # 3-step wizard
+├── register.html           # Create Account placeholder
 ├── css/
 │   └── styles.css          # Design tokens + all component styles + RTL + responsive
 ├── js/
