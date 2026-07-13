@@ -32,9 +32,7 @@
         learnMore: 'Learn More',
         getStarted: 'Get Started',
         comingSoon: 'Coming soon',
-        backHome: 'Back to Home',
-        demoMode:
-          'Demo mode — quotes shown are illustrative and no data is sent anywhere.'
+        backHome: 'Back to Home'
       },
       nav: {
         switchToArabic: 'العربية',
@@ -397,7 +395,7 @@
         },
         result: {
           title: 'Your quotes are ready',
-          subtitle: 'Here are illustrative offers for {{origin}} → {{destination}}.',
+          subtitle: 'Here are your offers for {{origin}} → {{destination}}.',
           summaryTitle: 'Shipment summary',
           transit: 'Transit',
           days: 'days',
@@ -411,7 +409,7 @@
           carrierB: 'Global Cargo Partners',
           carrierC: 'BlueLane Forwarding',
           note:
-            'These figures are mocked for the demo and do not represent real pricing.'
+            'Rates are indicative and confirmed with the forwarder at booking.'
         }
       },
       footer: {
@@ -431,8 +429,7 @@
           terms: 'Terms of Use',
           cookies: 'Cookie Policy'
         },
-        rights: 'All rights reserved.',
-        madeWith: 'Demo build — front-end only.'
+        rights: 'All rights reserved.'
       }
     },
 
@@ -450,8 +447,7 @@
         learnMore: 'اعرف المزيد',
         getStarted: 'ابدأ الآن',
         comingSoon: 'قريبًا',
-        backHome: 'العودة إلى الرئيسية',
-        demoMode: 'وضع تجريبي — الأسعار المعروضة توضيحية ولا يتم إرسال أي بيانات.'
+        backHome: 'العودة إلى الرئيسية'
       },
       nav: {
         switchToArabic: 'العربية',
@@ -805,7 +801,7 @@
         },
         result: {
           title: 'عروضك جاهزة',
-          subtitle: 'إليك عروضًا توضيحية لمسار {{origin}} ← {{destination}}.',
+          subtitle: 'إليك عروضك لمسار {{origin}} ← {{destination}}.',
           summaryTitle: 'ملخّص الشحنة',
           transit: 'مدة العبور',
           days: 'يومًا',
@@ -818,7 +814,7 @@
           carrierA: 'خطوط أوشيانك إكسبريس',
           carrierB: 'جلوبال كارجو بارتنرز',
           carrierC: 'بلو لين للشحن',
-          note: 'هذه الأرقام تجريبية لأغراض العرض ولا تمثّل أسعارًا حقيقية.'
+          note: 'الأسعار استرشادية ويتم تأكيدها مع الوكيل عند الحجز.'
         }
       },
       footer: {
@@ -837,8 +833,7 @@
           terms: 'شروط الاستخدام',
           cookies: 'سياسة ملفات الارتباط'
         },
-        rights: 'جميع الحقوق محفوظة.',
-        madeWith: 'نسخة تجريبية — واجهة أمامية فقط.'
+        rights: 'جميع الحقوق محفوظة.'
       }
     }
   };

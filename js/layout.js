@@ -66,7 +66,8 @@
           sidebarLink('terms.html', 'terms', 'file-text', 'sidebar.terms', activeNav, false) +
         '</div>' +
       '</nav>' +
-      '<div class="sidebar__foot" data-i18n="common.demoMode"></div>'
+      '<div class="sidebar__foot">© <span data-year></span> ' +
+        '<span data-i18n="common.appName"></span></div>'
     );
   }
 
@@ -119,7 +120,6 @@
         '<div class="footer__bottom">' +
           '<p>© <span data-year></span> <span data-i18n="common.appName"></span>. ' +
             '<span data-i18n="footer.rights"></span></p>' +
-          '<p data-i18n="footer.madeWith"></p>' +
         '</div>' +
       '</div>'
     );

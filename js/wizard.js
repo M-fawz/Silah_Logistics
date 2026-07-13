@@ -2,7 +2,7 @@
    wizard.js — 3-step Quick Quote wizard (vanilla).
      Step 1: searchable origin/destination comboboxes + cargo-type cards
      Step 2: weight / unit / container / special requirements
-     Step 3: contact details -> mocked quote summary ("Demo Mode")
+     Step 3: contact details -> quote summary
    Relies on the static markup in quote-wizard.html (data-* hooks below).
    ===================================================================== */
 (function () {
