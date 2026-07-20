@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADAM — Support</title>
+<link rel="icon" type="image/png" href="assets/adam-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ══════════════ WARM PALETTE (ADAM prototype — no blue, no cold gray) ══════════════ */
+:root {
+  --brand:        #E8641C;   /* logo orange */
+  --brand-2:      #F5883A;   /* amber highlight */
+  --brand-grad:   linear-gradient(140deg, #F5883A, #E8641C);
+  --brand-dark:   #D2560F;
+  --brand-soft:   #FBEFE2;   /* soft cream-orange tint */
+  --brand-tint:   #FFF3E8;   /* logo halo cream */
+  --brand-tint-2: #FBE3CE;
+  --surface:      #FFFFFF;
+  --header-bg:    #FFFDFA;
+  --bg:           #FBF7F1;   /* warm cream body */
+  --bubble-agent: #F4ECE0;   /* warm clay bubble */
+  --border:       rgba(60,38,18,.14);
+  --divider:      rgba(60,38,18,.09);
+  --text:         #2B2019;   /* warm espresso */
+  --sub:          #9C8975;   /* clay / taupe */
+  --online:       #4FA36B;
+  --danger:       #B23A2E;
+  --danger-bg:    #FBEDEA;
+  --danger-border:#F3D6CF;
+  --radius-lg:    18px;
+  --radius-md:    12px;
+  --shadow-sm:    0 1px 2px rgba(40,20,8,.06);
+  --shadow-md:    0 18px 44px -16px rgba(40,20,8,.34), 0 6px 16px -10px rgba(40,20,8,.20);
+  --shadow-brand: 0 4px 13px -3px rgba(232,100,28,.5);
+}
+
+html, body {
+  height: 100%; width: 100%;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── LAYOUT ─────────────────────────────────────── */
+.client-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 820px;
+  margin: 0 auto;
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+  animation: adamPop .42s cubic-bezier(.22,1,.32,1.35) both;
+}
+@keyframes adamPop {
+  from { opacity: 0; transform: scale(.985) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.client-layout.intake-mode .chat,
+.client-layout.intake-mode .footer {
+  display: none;
+}
+
+/* ─── HEADER ─────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 18px;
+  height: 66px;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--divider);
+  flex-shrink: 0;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.header-logo {
+  position: relative;
+  width: 40px; height: 40px;
+  background: linear-gradient(140deg, var(--brand-tint), var(--brand-tint-2));
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 6px rgba(232,100,28,.22);
+  flex-shrink: 0;
+}
+.header-logo img {
+  width: 30px; height: 30px;
+  object-fit: contain;
+  display: block;
+}
+.header-logo::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; right: -1px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--online);
+  border: 2px solid var(--header-bg);
+}
+
+.header-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.header-subtitle {
+  font-size: 11.5px;
+  color: var(--sub);
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header-subtitle::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--online);
+  flex-shrink: 0;
+}
+
+.header-session-meta {
+  text-align: right;
+  min-width: 0;
+  margin-left: auto;
+}
+
+.header-session-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.header-session-id {
+  font-size: 11px;
+  color: var(--sub);
+  font-family: 'DM Mono', monospace;
+  margin-top: 1px;
+}
+
+.header-end-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 13px;
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid var(--danger-border);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  flex-shrink: 0;
+  transition: background .15s, border-color .15s, transform .1s;
+}
+.header-end-btn:hover { background: #F7E0DB; border-color: #E9C3BA; }
+.header-end-btn:active { transform: scale(.97); }
+.header-end-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  background: var(--bg);
+  border-color: var(--divider);
+  color: var(--sub);
+}
+
+/* ─── CHAT AREA ──────────────────────────────────── */
+.chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+
+.chat::-webkit-scrollbar { width: 6px; }
+.chat::-webkit-scrollbar-track { background: transparent; }
+.chat::-webkit-scrollbar-thumb { background: #E4D6C4; border-radius: 10px; }
+.chat::-webkit-scrollbar-thumb:hover { background: #D8C4AC; }
+
+/* ─── MESSAGE BUBBLES ────────────────────────────── */
+.msg-wrap {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  animation: fadeUp .34s cubic-bezier(.22,1,.32,1) both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(9px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.msg-wrap.me    { justify-content: flex-end; }
+.msg-wrap.other { justify-content: flex-start; }
+
+.msg-avatar {
+  width: 30px; height: 30px;
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  padding: 3px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+.msg-avatar img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.msg {
+  max-width: 78%;
+  padding: 11px 15px;
+  font-size: 14px;
+  line-height: 1.55;
+  word-break: break-word;
+  /* Bidi: let each bubble pick its own base direction from its content so
+     mixed AR/EN sentences (and pure-Arabic ones) read naturally. */
+  unicode-bidi: plaintext;
+  text-align: start;
+}
+
+/* Inline markdown rendered from agent/AI replies (built as DOM, never raw HTML). */
+.msg strong { font-weight: 700; }
+.msg em     { font-style: italic; }
+
+.me .msg {
+  background: var(--brand-grad);
+  color: #fff;
+  border-radius: 18px 18px 6px 18px;
+  box-shadow: var(--shadow-brand);
+}
+
+.other .msg {
+  background: var(--bubble-agent);
+  color: var(--text);
+  border-radius: 18px 18px 18px 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* System message — warm mono pill */
+.msg-wrap.system {
+  justify-content: center;
+  margin: 8px 0;
+}
+.msg-wrap.system .msg {
+  max-width: 90%;
+  background: rgba(60,38,18,.06);
+  color: rgba(60,38,18,.6);
+  border-radius: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11.5px;
+  padding: 6px 14px;
+  text-align: center;
+  box-shadow: none;
+}
+
+/* File attachments */
+.attachment-bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.attachment-bubble img {
+  max-width: 240px;
+  border-radius: 11px;
+  display: block;
+}
+.attachment-meta {
+  font-size: 12px;
+  opacity: .85;
+}
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 11px;
+  background: rgba(255,255,255,.22);
+  border: 1px solid rgba(255,255,255,.4);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background .15s;
+}
+.download-btn:hover { background: rgba(255,255,255,.34); }
+.other .download-btn {
+  background: var(--brand-soft);
+  border-color: #F3D9BF;
+  color: var(--brand);
+}
+.other .download-btn:hover { background: #F7E2CC; }
+
+/* ─── INTAKE ─────────────────────────────────────── */
+.intake-screen {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #FFFDFA 0%, #FBF3EA 100%);
+  padding: 28px 20px;
+  overflow-y: auto;
+}
+
+.intake-card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: 22px;
+  box-shadow: var(--shadow-md);
+  padding: 28px;
+  animation: adamPop .42s cubic-bezier(.22,1,.32,1.35) both;
+}
+
+.intake-logo {
+  width: 54px; height: 54px;
+  border-radius: 16px;
+  background: linear-gradient(140deg, var(--brand-tint), var(--brand-tint-2));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 18px -6px rgba(232,100,28,.4);
+  margin-bottom: 16px;
+}
+.intake-logo img { width: 40px; height: 40px; object-fit: contain; }
+
+.intake-title {
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -.01em;
+}
+
+.intake-subtitle {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--sub);
+}
+
+.intake-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.intake-field.full {
+  grid-column: 1 / -1;
+}
+
+.intake-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sub);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.intake-input,
+.intake-select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+}
+
+.intake-input:focus,
+.intake-select:focus {
+  border-color: var(--brand);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(232,100,28,.12);
+}
+
+.intake-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.intake-note {
+  font-size: 12px;
+  color: var(--sub);
+  line-height: 1.5;
+}
+
+.intake-start-btn {
+  padding: 13px 20px;
+  border-radius: 13px;
+  background: var(--brand-grad);
+  color: #fff;
+  border: none;
+  font-size: 14.5px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 8px 20px -6px rgba(232,100,28,.55);
+  transition: filter .15s, transform .1s;
+}
+.intake-start-btn:hover { filter: brightness(1.04); }
+.intake-start-btn:active { transform: scale(.97); }
+.intake-start-btn:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+
+/* ─── FOOTER ─────────────────────────────────────── */
+.footer {
+  padding: 13px 14px;
+  background: var(--header-bg);
+  border-top: 1px solid var(--divider);
+  flex-shrink: 0;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 6px 6px 6px 8px;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+}
+.input-row:focus-within {
+  border-color: var(--brand);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(232,100,28,.1);
+}
+
+.attach-btn {
+  width: 38px; height: 38px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--sub);
+  transition: background .15s, color .15s, border-color .15s;
+  padding: 0;
+  flex-shrink: 0;
+}
+.attach-btn:hover { background: var(--brand-soft); color: var(--brand); border-color: #F3D9BF; }
+
+.msg-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  padding: 8px 4px;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  outline: none;
+  /* Same bidi handling as message bubbles for mixed AR/EN typing. */
+  unicode-bidi: plaintext;
+  text-align: start;
+}
+.msg-input::placeholder { color: var(--sub); opacity: .8; }
+.msg-input:disabled { opacity: .5; }
+
+.send-btn {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: var(--brand-grad);
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px -3px rgba(232,100,28,.55);
+  transition: filter .15s, transform .1s;
+}
+.send-btn:hover { filter: brightness(1.05); }
+.send-btn:active { transform: scale(.92); }
+.send-btn:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+.send-btn svg { width: 17px; height: 17px; fill: #fff; }
+
+.file-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--sub);
+  padding: 0 4px;
+}
+.clear-file-btn {
+  background: none;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  line-height: 1;
+}
+
+.file-hint {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--sub);
+  opacity: .8;
+  padding: 0 4px;
+}
+
+/* ─── TYPING INDICATOR (agent is composing…) ─────── */
+.typing-wrap .msg {
+  background: var(--bubble-agent);
+  color: var(--text);
+  border-radius: 18px 18px 18px 6px;
+  box-shadow: var(--shadow-sm);
+  padding: 13px 15px;
+}
+.typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.typing-dots span {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--sub);
+  opacity: .5;
+  animation: adamTyping 1.2s infinite ease-in-out both;
+}
+.typing-dots span:nth-child(2) { animation-delay: .18s; }
+.typing-dots span:nth-child(3) { animation-delay: .36s; }
+@keyframes adamTyping {
+  0%, 80%, 100% { transform: translateY(0);    opacity: .35; }
+  40%           { transform: translateY(-4px); opacity: .9;  }
+}
+
+/* ─── INTAKE FIELD VALIDATION ────────────────────── */
+.intake-error {
+  display: none;
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--danger);
+  line-height: 1.4;
+}
+.intake-error.show { display: block; }
+.intake-input.invalid,
+.intake-select.invalid {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}
+.intake-input.invalid:focus,
+.intake-select.invalid:focus {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(178,58,46,.14);
+}
+
+/* ─── RESPONSIVE (chat-panel popup width) ────────── */
+@media (max-width: 560px) {
+  .header { padding: 0 14px; gap: 8px; }
+  .header-session-meta { display: none; }   /* keep brand + subtitle + End compact */
+  .intake-grid { grid-template-columns: 1fr; }
+  .intake-actions { flex-direction: column; align-items: stretch; }
+  .intake-start-btn { width: 100%; }
+  .msg { max-width: 84%; }
+}
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+/* ═══════════════ CONFIG ═══════════════ */
+/* 🔒 Live ADAM backend wiring — MUST stay HTTPS. The site is served over HTTPS,
+   so any http:// endpoint is blocked by the browser as Mixed Content, which
+   silently breaks polling, message fetch, department loading and admin calls.
+   Every webhook is derived from one secure base, so the host lives in exactly
+   one place. ⛔ DO NOT downgrade WEBHOOK_BASE to http:// or a raw IP:port. */
+const WEBHOOK_BASE     = 'https://srv395355.hstgr.cloud';
+const WEBHOOK_SEND     = `${WEBHOOK_BASE}/webhook/adam/v0/send`;
+const WEBHOOK_FETCH    = `${WEBHOOK_BASE}/webhook/adam/v0/fetch`;
+const WEBHOOK_CLOSE    = `${WEBHOOK_BASE}/webhook/adam/v1/close-session`;
+const WEBHOOK_UPLOAD   = `${WEBHOOK_BASE}/webhook/adam/v1/upload-attachment`;
+const WEBHOOK_SETTINGS = `${WEBHOOK_BASE}/webhook/adam/admin/get-settings`;
+const WEBHOOK_DOWNLOAD = `${WEBHOOK_BASE}/webhook/adam/v1/download-attachment`;
+const WEBHOOK_GROUPS   = `${WEBHOOK_BASE}/webhook/adam/admin/list-groups`;
+
+const params = new URLSearchParams(window.location.search);
+
+/* ═══════════════ HELPERS ═══════════════ */
+const renderedMessageIds = new Set();
+
+function generateMessageId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+function generateSessionId() {
+  const d = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const ts =
+    pad(d.getDate()) + pad(d.getMonth() + 1) + String(d.getFullYear()).slice(-2) +
+    pad(d.getHours()) + pad(d.getMinutes()) + pad(d.getSeconds());
+  return `${ts}_${Math.floor(1000 + Math.random() * 9000)}`;
+}
+
+async function downloadAttachment(url, filename) {
+  const res  = await fetch(url);
+  const blob = await res.blob();
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = filename || 'attachment';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(a.href);
+}
+
+async function loadImagePreview(url, imgEl) {
+  try {
+    const res  = await fetch(url);
+    const blob = await res.blob();
+    imgEl.src  = URL.createObjectURL(blob);
+  } catch { /* ignore */ }
+}
+
+/* ═══════════════ CLIENT ═══════════════ */
+(function initClient() {
+  /* Session persistence (fixes "starts fresh on every reload/revisit"):
+     resume the last session for this browser when no explicit ?session= is given,
+     and remember whichever id we end up using so reloads + re-opens continue it. */
+  const ACTIVE_SESSION_KEY = 'adam_active_session';
+  let sessionId =
+    params.get('session') ||
+    (() => { try { return localStorage.getItem(ACTIVE_SESSION_KEY); } catch { return null; } })() ||
+    generateSessionId();
+  try { localStorage.setItem(ACTIVE_SESSION_KEY, sessionId); } catch { /* ignore */ }
+
+  let lastId      = 0;
+  let closed      = false;
+  let poller      = null;
+  let initialLoad = true;
+  let sessionKey = `adam_client_profile_${sessionId}`;
+  let clientProfile = loadStoredProfile();
+
+  document.getElementById('app').innerHTML = `
+    <div class="client-layout ${clientProfile ? '' : 'intake-mode'}" id="clientLayout">
+      <div class="header">
+        <div class="header-brand">
+          <div class="header-logo"><img src="assets/adam-logo.png" alt="ADAM"></div>
+          <div>
+            <div class="header-title">ADAM Support</div>
+            <div class="header-subtitle" id="headerSubtitle">We typically reply within minutes</div>
+          </div>
+        </div>
+        <div class="header-session-meta" id="headerSessionMeta">
+          <div class="header-session-name" id="headerSessionName">New session</div>
+          <div class="header-session-id" id="headerSessionId">${sessionId}</div>
+        </div>
+        <button class="header-end-btn" id="endSession">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          End Session
+        </button>
+      </div>
+
+      <div class="intake-screen" id="intakeScreen">
+        <div class="intake-card">
+          <div class="intake-logo"><img src="assets/adam-logo.png" alt="ADAM"></div>
+          <div class="intake-title">Start a support session</div>
+          <div class="intake-subtitle">Choose the right team and leave your contact details so the conversation can resume if the connection drops.</div>
+          <div class="intake-grid">
+            <div class="intake-field full">
+              <label class="intake-label" for="groupSelect">Department</label>
+              <select class="intake-select" id="groupSelect">
+                <option value="">Select a department</option>
+              </select>
+            </div>
+            <div class="intake-field full">
+              <label class="intake-label" for="clientNameInput">Name</label>
+              <input class="intake-input" id="clientNameInput" type="text" placeholder="Your full name" autocomplete="name" dir="auto" />
+              <div class="intake-error" id="nameError"></div>
+            </div>
+            <div class="intake-field">
+              <label class="intake-label" for="clientMobileInput">Mobile</label>
+              <input class="intake-input" id="clientMobileInput" type="tel" placeholder="+20..." autocomplete="tel" inputmode="tel" />
+              <div class="intake-error" id="mobileError"></div>
+            </div>
+            <div class="intake-field">
+              <label class="intake-label" for="clientEmailInput">Email</label>
+              <input class="intake-input" id="clientEmailInput" type="email" placeholder="name@company.com" autocomplete="email" />
+              <div class="intake-error" id="emailError"></div>
+            </div>
+          </div>
+          <div class="intake-actions">
+            <div class="intake-note" id="intakeStatus">The selected group will determine where the session is routed.</div>
+            <button class="intake-start-btn" id="startChatBtn" type="button">Start Chat</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat" id="chat"></div>
+
+      <div class="footer">
+        <div class="input-row">
+          <button class="attach-btn" id="attachBtn" type="button" title="Attach file">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+          </button>
+          <input class="msg-input" id="message" placeholder="Type a message…" autocomplete="off" dir="auto" />
+          <button class="send-btn" type="button" id="sendBtn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          </button>
+        </div>
+        <input id="fileInput" type="file" accept=".jpg,.jpeg,.png,.txt,.doc,.docx" style="display:none;" />
+        <div class="file-hint" id="fileHint">Max 10 MB — Images, TXT, DOC, DOCX</div>
+        <div class="file-meta" id="fileName"></div>
+      </div>
+    </div>
+  `;
+
+  const clientLayout = document.getElementById('clientLayout');
+  const intakeScreen = document.getElementById('intakeScreen');
+  const startChatBtn = document.getElementById('startChatBtn');
+  const groupSelect  = document.getElementById('groupSelect');
+  const nameInput    = document.getElementById('clientNameInput');
+  const mobileInput  = document.getElementById('clientMobileInput');
+  const emailInput   = document.getElementById('clientEmailInput');
+  const nameError    = document.getElementById('nameError');
+  const mobileError  = document.getElementById('mobileError');
+  const emailError   = document.getElementById('emailError');
+  const intakeStatus = document.getElementById('intakeStatus');
+  const headerSessionName = document.getElementById('headerSessionName');
+  const headerSessionId = document.getElementById('headerSessionId');
+  const headerSubtitle = document.getElementById('headerSubtitle');
+  const chat       = document.getElementById('chat');
+  const input      = document.getElementById('message');
+  const sendBtn    = document.getElementById('sendBtn');
+  const endBtn     = document.getElementById('endSession');
+  const END_BTN_HTML = endBtn.innerHTML;   // icon + label, so a reset can restore it
+  const fileInput  = document.getElementById('fileInput');
+  const attachBtn  = document.getElementById('attachBtn');
+  const fileName   = document.getElementById('fileName');
+  const fileHint   = document.getElementById('fileHint');
+  let attachmentsEnabled = true;
+
+  function loadStoredProfile() {
+    try {
+      const raw = localStorage.getItem(sessionKey);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function persistProfile(profile) {
+    clientProfile = profile;
+    localStorage.setItem(sessionKey, JSON.stringify(profile));
+    history.replaceState({}, '', `?session=${encodeURIComponent(sessionId)}`);
+    headerSessionName.textContent = `${profile.name} · ${profile.group_name}`;
+    headerSubtitle.textContent = `${profile.mobile} · ${profile.email}`;
+    clientLayout.classList.remove('intake-mode');
+    intakeScreen.style.display = 'none';
+    endBtn.disabled = false;
+  }
+
+  async function loadGroups() {
+    try {
+      const res = await fetch(WEBHOOK_GROUPS, { method: 'POST' });
+      // Backend returns a plain array of { id, name } departments.
+      const groups = await res.json();
+      if (!Array.isArray(groups)) throw new Error('Invalid group list');
+      // Idempotent: reset to just the placeholder before repopulating, so
+      // repeated calls (initial load + End Session → new intake) never stack
+      // duplicate options.
+      groupSelect.innerHTML = '<option value="">Select a department</option>';
+      groups.forEach(group => {
+        const option = document.createElement('option');
+        option.value = group.id;
+        option.textContent = group.name;
+        groupSelect.appendChild(option);
+      });
+      startChatBtn.disabled = false;
+      if (clientProfile?.group_id) groupSelect.value = String(clientProfile.group_id);
+    } catch {
+      intakeStatus.textContent = 'Unable to load groups. Refresh and try again.';
+      startChatBtn.disabled = true;
+    }
+  }
+
+  if (clientProfile) {
+    nameInput.value = clientProfile.name || '';
+    mobileInput.value = clientProfile.mobile || '';
+    emailInput.value = clientProfile.email || '';
+  }
+
+  /* ── Intake validation (mobile + email are REQUIRED and format-checked) ── */
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function isValidEmail(v) { return EMAIL_RE.test(v); }
+  function isValidPhone(v) {
+    // sensible phone: only +, digits, spaces, dashes, parentheses — with 7–15 digits
+    if (!/^\+?[0-9\s()\-]+$/.test(v)) return false;
+    const digits = v.replace(/\D/g, '');
+    return digits.length >= 7 && digits.length <= 15;
+  }
+
+  function setFieldError(inputEl, errEl, msg) {
+    inputEl.classList.add('invalid');
+    if (errEl) { errEl.textContent = msg; errEl.classList.add('show'); }
+  }
+  function clearFieldError(inputEl, errEl) {
+    inputEl.classList.remove('invalid');
+    if (errEl) { errEl.textContent = ''; errEl.classList.remove('show'); }
+  }
+
+  const INTAKE_HINT = 'The selected group will determine where the session is routed.';
+
+  // Clear a field's error as soon as the visitor edits it.
+  nameInput.addEventListener('input',   () => clearFieldError(nameInput, nameError));
+  mobileInput.addEventListener('input', () => clearFieldError(mobileInput, mobileError));
+  emailInput.addEventListener('input',  () => clearFieldError(emailInput, emailError));
+  groupSelect.addEventListener('change', () => {
+    groupSelect.classList.remove('invalid');
+    if (intakeStatus.dataset.error === '1') {
+      intakeStatus.textContent = INTAKE_HINT;
+      intakeStatus.style.color = '';
+      delete intakeStatus.dataset.error;
+    }
+  });
+
+  startChatBtn.onclick = () => {
+    const selected = groupSelect.options[groupSelect.selectedIndex];
+    const profile = {
+      group_id: groupSelect.value,
+      group_name: selected?.text || '',
+      name: nameInput.value.trim(),
+      mobile: mobileInput.value.trim(),
+      email: emailInput.value.trim()
+    };
+
+    // Reset previous validation state.
+    clearFieldError(nameInput, nameError);
+    clearFieldError(mobileInput, mobileError);
+    clearFieldError(emailInput, emailError);
+    groupSelect.classList.remove('invalid');
+    intakeStatus.textContent = INTAKE_HINT;
+    intakeStatus.style.color = '';
+    delete intakeStatus.dataset.error;
+
+    let firstInvalid = null;
+
+    if (!profile.group_id) {
+      groupSelect.classList.add('invalid');
+      intakeStatus.textContent = 'Please select a department.';
+      intakeStatus.style.color = 'var(--danger)';
+      intakeStatus.dataset.error = '1';
+      firstInvalid = firstInvalid || groupSelect;
+    }
+    if (!profile.name) {
+      setFieldError(nameInput, nameError, 'Please enter your name.');
+      firstInvalid = firstInvalid || nameInput;
+    }
+    if (!isValidPhone(profile.mobile)) {
+      setFieldError(mobileInput, mobileError, 'Enter a valid mobile number (7–15 digits).');
+      firstInvalid = firstInvalid || mobileInput;
+    }
+    if (!isValidEmail(profile.email)) {
+      setFieldError(emailInput, emailError, 'Enter a valid email address.');
+      firstInvalid = firstInvalid || emailInput;
+    }
+
+    // Don't create/start the session until every field is valid.
+    if (firstInvalid) { firstInvalid.focus(); return; }
+
+    persistProfile(profile);
+  };
+
+  endBtn.disabled = !clientProfile;
+
+  /* Attach */
+  attachBtn.onclick = () => fileInput.click();
+  fileInput.onchange = () => {
+    const file = fileInput.files?.[0];
+    fileName.innerHTML = '';
+    if (file) {
+      fileName.innerHTML = `
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+        <span>${file.name}</span>
+        <button class="clear-file-btn" id="clearFileBtn" type="button">✕</button>
+      `;
+      document.getElementById('clearFileBtn').onclick = () => {
+        fileInput.value = '';
+        fileName.innerHTML = '';
+      };
+    }
+  };
+
+  /* Send on Enter */
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); doSend(); }
+  });
+  sendBtn.onclick = doSend;
+
+  /* ── Safe inline-markdown rendering for agent/AI replies ─────────────────
+     The backend sometimes sends markdown-ish markers (**bold**, *italic*, and
+     "- " / "1." list markers). We parse them into DOM nodes ourselves — the
+     text only ever flows through textContent / text nodes, and the ONLY
+     elements added are <strong>/<em>/<br> that we create — so no raw HTML from
+     the backend is ever injected (no XSS). The parent .msg keeps dir="auto" +
+     unicode-bidi:plaintext, so mixed AR/EN still resolves per run, inside and
+     outside the bold/italic spans. */
+  function appendInlineMarkdown(parent, text) {
+    // Bold (**…**) is matched before italic (*…*); italic requires non-space
+    // boundaries so stray asterisks ("2 * 3") and list bullets aren't italicised.
+    const re = /\*\*([^*]+?)\*\*|\*(\S(?:[^*]*\S)?)\*/g;
+    let last = 0, mt;
+    while ((mt = re.exec(text)) !== null) {
+      if (mt.index > last) parent.appendChild(document.createTextNode(text.slice(last, mt.index)));
+      if (mt[1] !== undefined) {
+        const strong = document.createElement('strong');
+        strong.textContent = mt[1];
+        parent.appendChild(strong);
+      } else {
+        const em = document.createElement('em');
+        em.textContent = mt[2];
+        parent.appendChild(em);
+      }
+      last = re.lastIndex;
+    }
+    if (last < text.length) parent.appendChild(document.createTextNode(text.slice(last)));
+  }
+
+  function renderFormattedMessage(parent, raw) {
+    const text = raw == null ? '' : String(raw);
+    const lines = text.split(/\r?\n/);
+    lines.forEach((line, i) => {
+      if (i > 0) parent.appendChild(document.createElement('br'));  // preserve line breaks (lists)
+      // Convert a leading list marker to a readable bullet / keep the number.
+      const list = line.match(/^(\s*)([-*+]|\d+\.)\s+(.*)$/);
+      if (list) {
+        const marker = /^\d+\./.test(list[2]) ? list[2] + ' ' : '• ';
+        parent.appendChild(document.createTextNode(list[1] + marker));
+        appendInlineMarkdown(parent, list[3]);
+      } else {
+        appendInlineMarkdown(parent, line);
+      }
+    });
+  }
+
+  /* Render */
+  function render(m) {
+    if (renderedMessageIds.has(m.message_id)) return false;
+    renderedMessageIds.add(m.message_id);
+
+    const isMine = m.sender === 'client';
+    const isSystem = m.sender === 'system' || m.message === 'SESSION_CLOSED';
+
+    const w = document.createElement('div');
+    w.className = 'msg-wrap ' + (isSystem ? 'system' : isMine ? 'me' : 'other');
+
+    if (!isMine && !isSystem) {
+      w.innerHTML = `<div class="msg-avatar"><img src="assets/adam-logo.png" alt="ADAM"></div>`;
+    }
+
+    /* Only render as an attachment when a real attachment_id is present —
+       a null/absent attachment_id means this is a plain text message. */
+    if (m.message_type === 'file' && m.attachment_id != null) {
+      const name = m.message || 'attachment';
+      const url  = `${WEBHOOK_DOWNLOAD}?attachment_id=${m.attachment_id}`;
+      const ext  = name.split('.').pop()?.toLowerCase();
+      const isImg = ['jpg','jpeg','png'].includes(ext);
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'msg';
+      msgDiv.dir = 'auto';
+      msgDiv.innerHTML = `
+        <div class="attachment-bubble">
+          ${isImg ? `<img alt="${name}" style="max-width:240px;border-radius:10px;display:block;">` : ''}
+          <div class="attachment-meta">${name}</div>
+          <button class="download-btn" type="button">↓ Download</button>
+        </div>
+      `;
+      msgDiv.querySelector('.download-btn').onclick = () => downloadAttachment(url, name);
+      if (isImg) loadImagePreview(url, msgDiv.querySelector('img'));
+      w.appendChild(msgDiv);
+    } else {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'msg';
+      msgDiv.dir = 'auto';
+      if (m.message === 'SESSION_CLOSED') {
+        msgDiv.textContent = '⚠ Session ended';
+      } else if (!isMine && !isSystem) {
+        // Agent/AI reply — render markdown-ish markers safely (no raw HTML).
+        renderFormattedMessage(msgDiv, m.message);
+      } else {
+        msgDiv.textContent = m.message == null ? '' : String(m.message);
+      }
+      w.appendChild(msgDiv);
+    }
+
+    chat.appendChild(w);
+    chat.scrollTop = chat.scrollHeight;
+    return true;
+  }
+
+  /* ── Typing indicator ("agent is composing…") ──────────────────────────
+     Shown right after the visitor sends a message and cleared as soon as the
+     next reply renders (or after a timeout, to stay honest with 5s polling). */
+  let typingEl    = null;
+  let typingTimer = null;
+
+  function showTyping() {
+    if (closed) return;
+    if (!typingEl) {
+      const w = document.createElement('div');
+      w.className = 'msg-wrap other typing-wrap';
+      w.id = 'typingIndicator';
+      w.setAttribute('aria-label', 'Agent is typing');
+      w.innerHTML =
+        '<div class="msg-avatar"><img src="assets/adam-logo.png" alt="ADAM"></div>' +
+        '<div class="msg"><span class="typing-dots"><span></span><span></span><span></span></span></div>';
+      chat.appendChild(w);
+      typingEl = w;
+    }
+    chat.scrollTop = chat.scrollHeight;
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(hideTyping, 30000);
+  }
+
+  function hideTyping() {
+    clearTimeout(typingTimer);
+    typingTimer = null;
+    if (typingEl) { typingEl.remove(); typingEl = null; }
+  }
+
+  function closeUI() {
+    closed = true;
+    hideTyping();
+    input.disabled = true;
+    sendBtn.disabled = true;
+    endBtn.disabled = true;
+    endBtn.textContent = 'Session Ended';
+    clearInterval(poller);
+  }
+
+  /* Poll one tick. Hardened so the live loop never dies:
+     - an empty-body HTTP 200 is treated as "no new messages" (res.json() would throw)
+     - the whole tick is wrapped so any bad/empty poll logs-and-continues
+     - the since_id cursor keeps advancing so agent/AI replies arrive live, no refresh */
+  async function fetchMessages() {
+    if (closed) return;
+    const requestSession = sessionId;    // guard: a mid-flight End Session must not leak into the new session
+    try {
+      const res = await fetch(WEBHOOK_FETCH, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId, since_id: initialLoad ? 0 : lastId })
+      });
+
+      const raw = (await res.text()).trim();
+      if (requestSession !== sessionId || closed) return;  // session was reset/closed while awaiting → drop stale data
+      initialLoad = false;               // cursor mode engaged even when a poll is empty
+      if (!raw) return;                  // empty-body 200 → nothing new, keep polling
+
+      let msgs;
+      try { msgs = JSON.parse(raw); }
+      catch (e) { console.warn('[ADAM] non-JSON poll body, skipping tick', e); return; }
+      if (!Array.isArray(msgs)) return;
+
+      msgs.forEach(m => {
+        if (m.message === 'SESSION_CLOSED') closeUI();
+        // A genuine incoming (agent/AI/system) reply clears the typing indicator.
+        if (m.sender !== 'client' && !renderedMessageIds.has(m.message_id)) hideTyping();
+        render(m);
+        if (typeof m.id === 'number') lastId = Math.max(lastId, m.id);
+      });
+    } catch (err) {
+      console.warn('[ADAM] poll tick failed, will retry', err);
+    }
+  }
+
+  async function doSend() {
+    if (closed) return;
+    const text = input.value.trim();
+    const file = fileInput.files?.[0];
+    if (!text && !file) return;
+
+    if (file) {
+      if (!attachmentsEnabled) { alert('Attachments are disabled.'); return; }
+      const allowed = ['image/jpeg','image/png','text/plain','application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!allowed.includes(file.type)) { alert('Invalid file type. Allowed: jpg, jpeg, png, txt, doc, docx'); return; }
+      if (file.size > 10 * 1024 * 1024) { alert('File too large. Max 10MB.'); return; }
+      const fd = new FormData();
+      const attachmentMessageId = generateMessageId();
+      fd.append('session_id', sessionId);
+      fd.append('message_id', attachmentMessageId);
+      fd.append('group_id', clientProfile?.group_id || '');
+      fd.append('group_name', clientProfile?.group_name || '');
+      fd.append('client_name', clientProfile?.name || '');
+      fd.append('client_mobile', clientProfile?.mobile || '');
+      fd.append('client_email', clientProfile?.email || '');
+      fd.append('file', file);
+      const uploadRes  = await fetch(WEBHOOK_UPLOAD, { method: 'POST', body: fd });
+      const uploadData = await uploadRes.json();
+      if (!uploadData?.ok) { alert(uploadData?.error || 'Upload failed.'); return; }
+      fileInput.value = '';
+      fileName.innerHTML = '';
+      await fetchMessages();
+    }
+
+    if (!text) return;
+    const messageId = generateMessageId();
+    input.value = '';
+    render({ message_id: messageId, sender: 'client', message: text });
+    showTyping();   // agent is composing… (cleared when the reply arrives)
+    const res = await fetch(WEBHOOK_SEND, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        session_id: sessionId,
+        sender: 'client',
+        message: text,
+        message_id: messageId,
+        group_id: clientProfile?.group_id || '',
+        group_name: clientProfile?.group_name || '',
+        client_name: clientProfile?.name || '',
+        client_mobile: clientProfile?.mobile || '',
+        client_email: clientProfile?.email || ''
+      })
+    });
+    if (res.status === 403) closeUI();
+  }
+
+  async function loadAttachmentSetting() {
+    try {
+      const res  = await fetch(WEBHOOK_SETTINGS, { method: 'POST' });
+      const data = await res.json();
+      const s    = Array.isArray(data) ? data.find(x => x.key === 'allow_attachments') : null;
+      attachmentsEnabled = s?.value === '1';
+    } catch { attachmentsEnabled = false; }
+    if (!attachmentsEnabled) {
+      attachBtn.style.display = 'none';
+      fileHint.style.display  = 'none';
+      fileName.style.display  = 'none';
+    }
+  }
+
+  /* Tear the live session fully down and stand up a brand-new one, returning to
+     the welcome/intake screen — all without a page reload. Used by End Session. */
+  function startNewSession() {
+    // 1. Fresh identity (new id, new per-session profile key, new active marker).
+    sessionId  = generateSessionId();
+    sessionKey = `adam_client_profile_${sessionId}`;
+    try { localStorage.setItem(ACTIVE_SESSION_KEY, sessionId); } catch { /* ignore */ }
+
+    // 2. Reset all in-memory chat state.
+    lastId        = 0;
+    closed        = false;
+    initialLoad   = true;
+    clientProfile = null;
+    renderedMessageIds.clear();
+
+    // 3. Reset the chat + composer UI.
+    hideTyping();
+    chat.innerHTML     = '';
+    input.value        = '';
+    input.disabled     = false;
+    sendBtn.disabled   = false;
+    fileInput.value    = '';
+    fileName.innerHTML = '';
+    endBtn.innerHTML   = END_BTN_HTML;   // restore icon + label (a prior closeUI may have wiped it)
+    endBtn.disabled    = true;           // re-enabled once the new intake is submitted
+
+    // 4. Reset the header meta to the new session.
+    headerSessionName.textContent = 'New session';
+    headerSubtitle.textContent    = 'We typically reply within minutes';
+    headerSessionId.textContent   = sessionId;
+
+    // 5. Reset the intake form (values + validation state).
+    groupSelect.value = '';
+    groupSelect.classList.remove('invalid');
+    nameInput.value   = '';
+    mobileInput.value = '';
+    emailInput.value  = '';
+    clearFieldError(nameInput, nameError);
+    clearFieldError(mobileInput, mobileError);
+    clearFieldError(emailInput, emailError);
+    intakeStatus.textContent = INTAKE_HINT;
+    intakeStatus.style.color = '';
+    delete intakeStatus.dataset.error;
+
+    // 6. Back to the welcome/intake screen.
+    clientLayout.classList.add('intake-mode');
+    intakeScreen.style.display = '';
+    history.replaceState({}, '', location.pathname);
+
+    // 7. Refresh departments and restart the poll loop for the new session.
+    loadGroups();
+    clearInterval(poller);
+    poller = setInterval(fetchMessages, 5000);
+  }
+
+  endBtn.onclick = () => {
+    if (endBtn.disabled) return;         // nothing to end (no active session yet)
+    const endingSessionId = sessionId;
+
+    // Stop polling the session we're about to close so no stale tick fires.
+    clearInterval(poller);
+    poller = null;
+
+    // Close the old session on the backend (fire-and-forget — a failure here
+    // must never block the reset) and drop its stored profile so it can't resume.
+    fetch(WEBHOOK_CLOSE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ session_id: endingSessionId, closed_by: 'client' })
+    }).catch(() => { /* ignore — session is being torn down anyway */ });
+    try { localStorage.removeItem(`adam_client_profile_${endingSessionId}`); } catch { /* ignore */ }
+
+    // Stand up a brand-new session and return to the welcome screen.
+    startNewSession();
+  };
+
+  /* When a minimized/hidden tab becomes visible again, poll immediately
+     so the newest replies show up without waiting for the next interval. */
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) fetchMessages();
+  });
+
+  // Always populate the department dropdown up front — it's needed for the
+  // intake screen on a fresh visit AND when End Session returns here later
+  // (a resumed session used to skip this, leaving the dropdown empty).
+  loadGroups();
+  if (clientProfile) {
+    persistProfile(clientProfile);
+  }
+  loadAttachmentSetting();
+  fetchMessages();
+  poller = setInterval(fetchMessages, 5000);
+})();
+</script>
+</body>
+</html>

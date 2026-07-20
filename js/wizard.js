@@ -520,6 +520,10 @@
   }
 
   function onLangChange() {
+    // The wizard only initialises on the quote-wizard page. On every other page the
+    // language toggle still fires silah:langchange, so bail out before touching the
+    // (unbuilt) wizard DOM to avoid throwing.
+    if (!els.next) return;
     // Static labels/placeholders are handled globally by I18n.apply().
     applyAllErrors();
     renderNav();

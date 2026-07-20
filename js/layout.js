@@ -24,7 +24,7 @@
             '<span data-icon="globe" class="icon icon-sm"></span>' +
             '<span data-lang-label></span>' +
           '</button>' +
-          '<a class="btn btn--primary btn--sm" href="register.html" data-i18n="common.register"></a>' +
+          '<a class="btn btn--primary btn--sm" href="https://app.silahlogistics.com/register" data-i18n="common.register"></a>' +
         '</div>' +
       '</div>'
     );
@@ -90,18 +90,18 @@
 
   function footer() {
     var product = footerCol('footer.product', [
-      { href: 'how-it-works.html', key: 'footer.links.services' },
-      { href: 'quote-start.html', key: 'footer.links.quickQuote' },
-      { href: '#', key: 'footer.links.rates', stub: true }
+      { href: 'https://app.silahlogistics.com/how-it-works', key: 'footer.links.services' },
+      { href: 'https://app.silahlogistics.com/quick-quote/wizard', key: 'footer.links.quickQuote' },
+      { href: 'https://app.silahlogistics.com/', key: 'footer.links.rates' }
     ]);
     var company = footerCol('footer.company', [
-      { href: 'about.html', key: 'footer.links.about' },
+      { href: 'https://app.silahlogistics.com/about', key: 'footer.links.about' },
       { href: '#', key: 'footer.links.careers', stub: true },
       { href: '#', key: 'footer.links.contact', stub: true }
     ]);
     var legal = footerCol('footer.legal', [
-      { href: 'privacy.html', key: 'footer.links.privacy' },
-      { href: 'terms.html', key: 'footer.links.terms' },
+      { href: 'https://app.silahlogistics.com/privacy', key: 'footer.links.privacy' },
+      { href: 'https://app.silahlogistics.com/terms', key: 'footer.links.terms' },
       { href: '#', key: 'footer.links.cookies', stub: true }
     ]);
 
@@ -136,6 +136,18 @@
     terms: 'terms'
   };
 
+  // Load the site-wide ADAM support chat launcher exactly once. Kept here (in the
+  // shared chrome) so every page gets the floating widget without duplicating a
+  // <script> tag across all the HTML files.
+  function mountAdamLauncher() {
+    if (document.getElementById('adam-launcher-js')) return;
+    var s = document.createElement('script');
+    s.id = 'adam-launcher-js';
+    s.src = 'adam/launcher.js';
+    s.defer = true;
+    document.body.appendChild(s);
+  }
+
   function render() {
     var page = document.body.getAttribute('data-page') || '';
     var activeNav = PAGE_NAV[page] || '';
@@ -147,6 +159,8 @@
     if (navEl) navEl.innerHTML = navbar();
     if (sideEl) sideEl.innerHTML = sidebar(activeNav);
     if (footEl) footEl.innerHTML = footer();
+
+    mountAdamLauncher();
   }
 
   window.Layout = { render: render };
