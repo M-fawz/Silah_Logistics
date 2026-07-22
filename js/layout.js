@@ -7,6 +7,17 @@
 (function () {
   'use strict';
 
+  /* Single source of truth for the company's public contact details, so the
+     footer, legal pages, and any future contact surface never drift apart. */
+  var CONTACT = {
+    phoneDisplay: '+44 7452 326110',
+    phoneHref: 'tel:+447452326110',
+    email: 'info@silahlogistics.com',
+    linkedin: 'https://www.linkedin.com/company/silah-logistics/',
+    facebook: 'https://www.facebook.com/profile.php?id=61591704263122',
+    instagram: 'https://www.instagram.com/silahlogistics/'
+  };
+
   function navbar() {
     return (
       '<div class="container navbar__inner">' +
@@ -88,6 +99,40 @@
     );
   }
 
+  // Contact + social block shown in the footer's brand column. Every item is
+  // clickable (tel:/mailto:/external) with an icon; external social links open
+  // in a new tab. The phone number is wrapped in a dir="ltr" run so it never
+  // reverses under the Arabic (RTL) layout.
+  function contactBlock() {
+    var social = [
+      { href: CONTACT.linkedin, icon: 'linkedin', label: 'LinkedIn' },
+      { href: CONTACT.facebook, icon: 'facebook', label: 'Facebook' },
+      { href: CONTACT.instagram, icon: 'instagram', label: 'Instagram' }
+    ]
+      .map(function (s) {
+        return (
+          '<a href="' + s.href + '" target="_blank" rel="noopener noreferrer" aria-label="' + s.label + '" title="' + s.label + '">' +
+            '<span data-icon="' + s.icon + '" class="icon"></span>' +
+          '</a>'
+        );
+      })
+      .join('');
+
+    return (
+      '<div class="footer__contact">' +
+        '<a href="' + CONTACT.phoneHref + '">' +
+          '<span data-icon="phone" class="icon icon-sm"></span>' +
+          '<span class="ltr-num" dir="ltr">' + CONTACT.phoneDisplay + '</span>' +
+        '</a>' +
+        '<a href="mailto:' + CONTACT.email + '">' +
+          '<span data-icon="mail" class="icon icon-sm"></span>' +
+          '<span>' + CONTACT.email + '</span>' +
+        '</a>' +
+      '</div>' +
+      '<div class="footer__social" data-i18n-aria="footer.followUs">' + social + '</div>'
+    );
+  }
+
   function footer() {
     var product = footerCol('footer.product', [
       { href: 'https://app.silahlogistics.com/how-it-works', key: 'footer.links.services' },
@@ -97,7 +142,7 @@
     var company = footerCol('footer.company', [
       { href: 'https://app.silahlogistics.com/about', key: 'footer.links.about' },
       { href: '#', key: 'footer.links.careers', stub: true },
-      { href: '#', key: 'footer.links.contact', stub: true }
+      { href: 'mailto:' + CONTACT.email, key: 'footer.links.contact' }
     ]);
     var legal = footerCol('footer.legal', [
       { href: 'https://app.silahlogistics.com/privacy', key: 'footer.links.privacy' },
@@ -114,6 +159,7 @@
               '<span data-i18n="common.appName"></span>' +
             '</div>' +
             '<p class="footer__tagline" data-i18n="footer.tagline"></p>' +
+            contactBlock() +
           '</div>' +
           product + company + legal +
         '</div>' +

@@ -252,6 +252,42 @@ html, body {
 .msg strong { font-weight: 700; }
 .msg em     { font-style: italic; }
 
+/* Auto-detected contact links (phone / email / URL / social) inside any bubble.
+   Rendered as real, clickable anchors with a leading icon. Every one is an
+   isolated LTR run so phone numbers, emails and URLs all read correctly even
+   inside an Arabic (RTL) reply — the visible/copied text is unchanged. */
+.msg-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--brand-dark);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(210, 86, 15, .35);
+  word-break: break-word;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.msg-link:hover { border-bottom-color: var(--brand); }
+.msg-link svg {
+  width: 13px; height: 13px;
+  flex: 0 0 auto;
+  stroke: currentColor;
+}
+/* Phone numbers stay strictly left-to-right, even inside Arabic (RTL) replies,
+   so "+44 7452 326110" never renders reversed. The visible text — and thus what
+   gets copied — remains the exact number; the tel: href drives the dialer. */
+.msg-phone {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+/* On the visitor's own (orange) bubbles, links need light styling. */
+.me .msg-link {
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, .5);
+}
+.me .msg-link:hover { border-bottom-color: #fff; }
+
 .me .msg {
   background: var(--brand-grad);
   color: #fff;
@@ -939,25 +975,92 @@ async function loadImagePreview(url, imgEl) {
      the backend is ever injected (no XSS). The parent .msg keeps dir="auto" +
      unicode-bidi:plaintext, so mixed AR/EN still resolves per run, inside and
      outside the bold/italic spans. */
+  /* ── Contact-info auto-linking (phone / email / URL / social) ────────────
+     Agent, AI and visitor messages are plain text from the backend. We turn any
+     contact details inside them into professional, clickable anchors with a
+     leading icon — WITHOUT ever injecting backend HTML: the visible label is
+     always a text node and the only elements created are anchors + our own
+     trusted inline <svg> icons. Every href is built from a safe scheme
+     (tel:/mailto:/https:) so no javascript: URLs can slip through. */
+  const ICON_PHONE =
+    '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+  const ICON_MAIL =
+    '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>';
+  const ICON_LINK =
+    '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>';
+  const ICON_LINKEDIN =
+    '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>';
+  const ICON_FACEBOOK =
+    '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>';
+  const ICON_INSTAGRAM =
+    '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>';
+
+  // Single pass over a plain-text run, capturing (1) emails, (2) http/www URLs,
+  // (3) international phone numbers (leading +, 7–15 digits).
+  const CONTACT_RE =
+    /([A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,})|((?:https?:\/\/|www\.)[^\s<]+[^\s<.,;:!?)])|(\+\d[\d\s()\-.]{5,}\d)/g;
+
+  function socialIcon(url) {
+    const u = url.toLowerCase();
+    if (u.indexOf('linkedin.') !== -1) return ICON_LINKEDIN;
+    if (u.indexOf('facebook.') !== -1 || u.indexOf('fb.com') !== -1) return ICON_FACEBOOK;
+    if (u.indexOf('instagram.') !== -1) return ICON_INSTAGRAM;
+    return ICON_LINK;
+  }
+
+  function buildContactLink(href, label, iconSvg, opts) {
+    opts = opts || {};
+    const a = document.createElement('a');
+    a.className = 'msg-link' + (opts.cls ? ' ' + opts.cls : '');
+    a.href = href;
+    a.setAttribute('dir', 'ltr');                          // phone/email/URL are all LTR
+    if (opts.blank) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+    a.innerHTML = iconSvg;                                 // trusted inline icon only
+    a.appendChild(document.createTextNode(label));         // label is always a text node
+    return a;
+  }
+
+  // Append `text` to `parent`, converting any detected contact info into anchors.
+  function appendLinkified(parent, text) {
+    if (!text) return;
+    let last = 0, m;
+    CONTACT_RE.lastIndex = 0;
+    while ((m = CONTACT_RE.exec(text)) !== null) {
+      if (m.index > last) parent.appendChild(document.createTextNode(text.slice(last, m.index)));
+      if (m[1]) {
+        parent.appendChild(buildContactLink('mailto:' + m[1], m[1], ICON_MAIL));
+      } else if (m[2]) {
+        const href = /^https?:\/\//i.test(m[2]) ? m[2] : 'https://' + m[2];
+        parent.appendChild(buildContactLink(href, m[2], socialIcon(m[2]), { blank: true }));
+      } else {
+        const display = m[3].trim();
+        const tel = 'tel:+' + display.replace(/\D/g, '');
+        parent.appendChild(buildContactLink(tel, display, ICON_PHONE, { ltr: true, cls: 'msg-phone' }));
+      }
+      last = CONTACT_RE.lastIndex;
+    }
+    if (last < text.length) parent.appendChild(document.createTextNode(text.slice(last)));
+  }
+
   function appendInlineMarkdown(parent, text) {
     // Bold (**…**) is matched before italic (*…*); italic requires non-space
     // boundaries so stray asterisks ("2 * 3") and list bullets aren't italicised.
     const re = /\*\*([^*]+?)\*\*|\*(\S(?:[^*]*\S)?)\*/g;
     let last = 0, mt;
     while ((mt = re.exec(text)) !== null) {
-      if (mt.index > last) parent.appendChild(document.createTextNode(text.slice(last, mt.index)));
+      if (mt.index > last) appendLinkified(parent, text.slice(last, mt.index));
       if (mt[1] !== undefined) {
         const strong = document.createElement('strong');
-        strong.textContent = mt[1];
+        appendLinkified(strong, mt[1]);
         parent.appendChild(strong);
       } else {
         const em = document.createElement('em');
-        em.textContent = mt[2];
+        appendLinkified(em, mt[2]);
         parent.appendChild(em);
       }
       last = re.lastIndex;
     }
-    if (last < text.length) parent.appendChild(document.createTextNode(text.slice(last)));
+    if (last < text.length) appendLinkified(parent, text.slice(last));
   }
 
   function renderFormattedMessage(parent, raw) {
@@ -1022,7 +1125,9 @@ async function loadImagePreview(url, imgEl) {
         // Agent/AI reply — render markdown-ish markers safely (no raw HTML).
         renderFormattedMessage(msgDiv, m.message);
       } else {
-        msgDiv.textContent = m.message == null ? '' : String(m.message);
+        // Visitor / system text — no markdown, but still auto-link contact info
+        // (keeps phones LTR + clickable) without injecting any backend HTML.
+        appendLinkified(msgDiv, m.message == null ? '' : String(m.message));
       }
       w.appendChild(msgDiv);
     }

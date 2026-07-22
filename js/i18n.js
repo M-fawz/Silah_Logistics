@@ -429,6 +429,7 @@
           terms: 'Terms of Use',
           cookies: 'Cookie Policy'
         },
+        followUs: 'Follow us on social media',
         rights: 'All rights reserved.'
       }
     },
@@ -833,6 +834,7 @@
           terms: 'شروط الاستخدام',
           cookies: 'سياسة ملفات الارتباط'
         },
+        followUs: 'تابعنا على وسائل التواصل الاجتماعي',
         rights: 'جميع الحقوق محفوظة.'
       }
     }
