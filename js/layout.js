@@ -26,7 +26,7 @@
             '<span data-icon="menu" class="icon icon-lg"></span>' +
           '</button>' +
           '<a class="brand" href="index.html" data-i18n-aria="common.appName">' +
-            '<img class="brand__symbol" src="assets/symbol.png" alt="">' +
+            '<img class="brand__symbol" src="assets/logo-symbol.svg" alt="">' +
             '<img class="brand__wordmark" src="assets/wordmark.png" alt="Silah Logistics">' +
           '</a>' +
         '</div>' +
@@ -56,7 +56,10 @@
   function sidebar(activeNav) {
     return (
       '<div class="sidebar__head">' +
-        '<span class="sidebar__appname" data-i18n="common.appName"></span>' +
+        '<span class="sidebar__brand">' +
+          '<img class="sidebar__logo" src="assets/logo-symbol.svg" alt="">' +
+          '<span class="sidebar__appname" data-i18n="common.appName"></span>' +
+        '</span>' +
         '<button class="sidebar__close" type="button" data-menu-close data-i18n-aria="nav.closeMenu">' +
           '<span data-icon="x" class="icon"></span>' +
         '</button>' +
@@ -155,7 +158,7 @@
         '<div class="footer__grid">' +
           '<div>' +
             '<div class="footer__brand">' +
-              '<img src="assets/symbol.png" alt="">' +
+              '<img src="assets/logo-symbol.svg" alt="">' +
               '<span data-i18n="common.appName"></span>' +
             '</div>' +
             '<p class="footer__tagline" data-i18n="footer.tagline"></p>' +

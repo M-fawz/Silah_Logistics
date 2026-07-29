@@ -298,16 +298,14 @@ html[dir='rtl'] .rtl-flip {
   gap: 0.5rem;
   min-width: 0;
 }
+/* On small screens the navbar shows the compact chain symbol only, keeping the
+   header uncluttered; the full wordmark takes over at >=640px (see media query). */
 .brand__symbol {
-  height: 2.25rem;
-  width: 2.25rem;
+  height: 2.1rem;
+  width: 2.1rem;
   object-fit: contain;
-  /* The wordmark already includes the chain symbol, so the standalone symbol
-     stays hidden — showing both would duplicate the icon. */
-  display: none;
+  display: block;
 }
-/* Full logo lockup (symbol + name) shows on mobile too — same as desktop —
-   sized down so it fits the header, and allowed to shrink before it overflows. */
 .brand__wordmark {
   height: 1.75rem;
   width: auto;
@@ -315,7 +313,7 @@ html[dir='rtl'] .rtl-flip {
   min-width: 0;
   object-fit: contain;
   object-position: left center;
-  display: block;
+  display: none;
 }
 html[dir='rtl'] .brand__wordmark {
   object-position: right center;
@@ -405,6 +403,18 @@ html[dir='rtl'] .sidebar {
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 1.25rem 0;
+}
+.sidebar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.sidebar__logo {
+  height: 1.75rem;
+  width: 1.75rem;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 .sidebar__appname {
   font-size: 0.75rem;
