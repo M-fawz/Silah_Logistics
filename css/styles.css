@@ -32,7 +32,7 @@
   --radius-2xl: 1.25rem;
   --radius-full: 9999px;
 
-  --navbar-h: 4rem;
+  --navbar-h: 4.5rem;
   --sidebar-w: 16rem;
   --drawer-w: 18rem;
 
@@ -308,7 +308,7 @@ html[dir='rtl'] .rtl-flip {
   display: none;
 }
 .brand__wordmark {
-  height: 2.15rem;
+  height: 2.5rem;
   width: auto;
   max-width: 100%;
   min-width: 0;
@@ -1805,7 +1805,7 @@ textarea.control {
   }
   .brand__wordmark {
     display: block;
-    height: 2.9rem;
+    height: 3.4rem;
   }
   .lang-toggle [data-lang-label] {
     display: inline;
