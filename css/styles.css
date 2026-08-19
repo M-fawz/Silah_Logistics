@@ -325,7 +325,7 @@ html[dir='rtl'] .brand__wordmark {
   display: none;
 }
 .navbar__login {
-  display: none;
+  display: inline-flex;
   align-items: center;
   gap: 0.375rem;
   padding: 0.5rem 0.75rem;
@@ -333,6 +333,7 @@ html[dir='rtl'] .brand__wordmark {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--navy);
+  white-space: nowrap;
 }
 .navbar__login:hover {
   background: var(--surface);
@@ -1809,9 +1810,6 @@ textarea.control {
   }
   .lang-toggle [data-lang-label] {
     display: inline;
-  }
-  .navbar__login {
-    display: inline-flex;
   }
   .hero__cta,
   .cta-block__actions,

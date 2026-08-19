@@ -35,6 +35,7 @@
             '<span data-icon="globe" class="icon icon-sm"></span>' +
             '<span data-lang-label></span>' +
           '</button>' +
+          '<a class="navbar__login" href="https://app.silahlogistics.com/login" data-i18n="common.login"></a>' +
           '<a class="btn btn--primary btn--sm" href="https://app.silahlogistics.com/register" data-i18n="common.register"></a>' +
         '</div>' +
       '</div>'

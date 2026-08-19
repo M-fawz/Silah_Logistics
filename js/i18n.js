@@ -22,6 +22,7 @@
       common: {
         appName: 'Silah Logistics',
         tagline: 'Connect, Quote, Ship',
+        login: 'Login',
         register: 'Register',
         getQuote: 'Get a Quote',
         getAQuote: 'Get a Quote',
@@ -438,6 +439,7 @@
       common: {
         appName: 'صلة للخدمات اللوجستية',
         tagline: 'تواصل، سعّر، اشحن',
+        login: 'تسجيل الدخول',
         register: 'إنشاء حساب',
         getQuote: 'احصل على عرض سعر',
         getAQuote: 'احصل على عرض سعر',
