@@ -21,7 +21,7 @@
     en: {
       common: {
         appName: 'Silah Logistics',
-        tagline: 'Connect, Quote, Ship',
+        tagline: 'Click, Quote, Ship',
         login: 'Login',
         register: 'Register',
         getQuote: 'Get a Quote',
