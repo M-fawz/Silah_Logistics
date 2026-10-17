@@ -319,6 +319,33 @@ html, body {
   box-shadow: none;
 }
 
+/* Visitor message the backend did not accept — dimmed, with an inline retry row. */
+.me.msg-failed .msg { opacity: .6; }
+.msg-failed-row {
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: -2px;
+  font-size: 12px;
+  color: var(--danger);
+}
+.msg-retry-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.msg-retry-btn:focus-visible {
+  outline: 2px solid var(--danger);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
 /* File attachments */
 .attachment-bubble {
   display: flex;
@@ -652,6 +679,14 @@ const WEBHOOK_UPLOAD   = `${WEBHOOK_BASE}/webhook/adam/v1/upload-attachment`;
 const WEBHOOK_SETTINGS = `${WEBHOOK_BASE}/webhook/adam/admin/get-settings`;
 const WEBHOOK_DOWNLOAD = `${WEBHOOK_BASE}/webhook/adam/v1/download-attachment`;
 const WEBHOOK_GROUPS   = `${WEBHOOK_BASE}/webhook/adam/admin/list-groups`;
+
+/* Host-site identity. ADAM attributes every conversation to a site by this id, and
+   the send webhook only stores a message that carries an accepted one — without it
+   the request still returns HTTP 200, but with an empty body, and the message is
+   silently dropped (no history, no AI reply). 'silah' is the value the backend
+   accepts for Silah and matches the Silah app's /adam/adam.config.js.
+   ⛔ Do not change it or add another value without the ADAM backend owner. */
+const SITE_ID = 'silah';
 
 const params = new URLSearchParams(window.location.search);
 
@@ -1134,7 +1169,7 @@ async function loadImagePreview(url, imgEl) {
 
     chat.appendChild(w);
     chat.scrollTop = chat.scrollHeight;
-    return true;
+    return w;
   }
 
   /* ── Typing indicator ("agent is composing…") ──────────────────────────
@@ -1203,6 +1238,8 @@ async function loadImagePreview(url, imgEl) {
 
       msgs.forEach(m => {
         if (m.message === 'SESSION_CLOSED') closeUI();
+        // The backend has the visitor's message after all — drop any "Not delivered" mark.
+        if (m.sender === 'client') clearSendFailure(m.message_id);
         // A genuine incoming (agent/AI/system) reply clears the typing indicator.
         if (m.sender !== 'client' && !renderedMessageIds.has(m.message_id)) hideTyping();
         render(m);
@@ -1227,6 +1264,7 @@ async function loadImagePreview(url, imgEl) {
       if (file.size > 10 * 1024 * 1024) { alert('File too large. Max 10MB.'); return; }
       const fd = new FormData();
       const attachmentMessageId = generateMessageId();
+      fd.append('site_id', SITE_ID);
       fd.append('session_id', sessionId);
       fd.append('message_id', attachmentMessageId);
       fd.append('group_id', clientProfile?.group_id || '');
@@ -1246,24 +1284,73 @@ async function loadImagePreview(url, imgEl) {
     if (!text) return;
     const messageId = generateMessageId();
     input.value = '';
-    render({ message_id: messageId, sender: 'client', message: text });
+    const bubble = render({ message_id: messageId, sender: 'client', message: text });
+    await sendText(text, messageId, bubble);
+  }
+
+  /* POST one text message. The send webhook answers {"status":"ok"} once it has
+     stored the message; a request it does not accept still comes back HTTP 200 but
+     with an EMPTY body, so a 2xx alone is not proof of delivery. An empty body,
+     an error status or a network failure marks the bubble "Not delivered" with an
+     inline Retry instead of leaving a typing indicator that never resolves.
+     A retry reuses `messageId`, so it is the same message, not a second bubble. */
+  async function sendText(text, messageId, bubble) {
+    const requestSession = sessionId;   // guard: a mid-flight End Session must not leak into the new session
+    clearSendFailure(messageId);
     showTyping();   // agent is composing… (cleared when the reply arrives)
-    const res = await fetch(WEBHOOK_SEND, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        session_id: sessionId,
-        sender: 'client',
-        message: text,
-        message_id: messageId,
-        group_id: clientProfile?.group_id || '',
-        group_name: clientProfile?.group_name || '',
-        client_name: clientProfile?.name || '',
-        client_mobile: clientProfile?.mobile || '',
-        client_email: clientProfile?.email || ''
-      })
-    });
-    if (res.status === 403) closeUI();
+    let delivered = false;
+    try {
+      const res = await fetch(WEBHOOK_SEND, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          site_id: SITE_ID,
+          session_id: sessionId,
+          sender: 'client',
+          message: text,
+          message_id: messageId,
+          group_id: clientProfile?.group_id || '',
+          group_name: clientProfile?.group_name || '',
+          client_name: clientProfile?.name || '',
+          client_mobile: clientProfile?.mobile || '',
+          client_email: clientProfile?.email || ''
+        })
+      });
+      if (requestSession !== sessionId) return;
+      if (res.status === 403) { closeUI(); return; }
+      delivered = res.ok && (await res.text()).trim() !== '';
+    } catch (err) {
+      console.warn('[ADAM] send failed', err);
+    }
+    if (requestSession !== sessionId || closed) return;
+    if (!delivered) markSendFailed(bubble, text, messageId);
+  }
+
+  function markSendFailed(bubble, text, messageId) {
+    hideTyping();
+    if (!bubble) return;
+    bubble.classList.add('msg-failed');
+    const row = document.createElement('div');
+    row.className = 'msg-failed-row';
+    row.dataset.failedId = messageId;
+    row.setAttribute('role', 'alert');
+    row.appendChild(document.createTextNode('Not delivered.'));
+    const retryBtn = document.createElement('button');
+    retryBtn.type = 'button';
+    retryBtn.className = 'msg-retry-btn';
+    retryBtn.textContent = 'Retry';
+    retryBtn.onclick = () => { if (!closed) sendText(text, messageId, bubble); };
+    row.appendChild(retryBtn);
+    bubble.after(row);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function clearSendFailure(messageId) {
+    if (messageId == null) return;
+    const row = chat.querySelector(`.msg-failed-row[data-failed-id="${CSS.escape(String(messageId))}"]`);
+    if (!row) return;
+    row.previousElementSibling?.classList.remove('msg-failed');
+    row.remove();
   }
 
   async function loadAttachmentSetting() {
