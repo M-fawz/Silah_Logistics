@@ -2,6 +2,8 @@
 
 **Date:** 2026-10-17 · **Branch:** `fix/adam-main-site-site-id` · **Fix commit:** `96b3834`
 **Status:** **FIX IMPLEMENTED AND TESTED LOCALLY — PRODUCTION DEPLOYMENT PENDING**
+**Published:** fast-forwarded to GitHub `main` on 2026-10-17 (`c2b77de..24f6cc6`). Details in §11.
+`silahlogistics.com` (Hostinger) is **still awaiting** the manual upload.
 
 ---
 
@@ -59,7 +61,7 @@ UI), returned `{"status":"ok"}`, and the message and AI reply were stored.
 | `www.silahlogistics.com` | Serves the same files as the apex (identical ETag on `/`, identical `/adam/*` bytes). |
 | Widget source paths | `adam/ADAM-client.html` (chat client, runs in an iframe), `adam/launcher.js` (floating button + panel), mounted on every page by `js/layout.js → mountAdamLauncher()`. |
 | Main-site hosting | Hostinger shared hosting: response headers `Server: LiteSpeed`, `platform: hostinger`, `panel: hpanel`. |
-| Main-site deploy mechanism | **Not discoverable from the repo.** It has no CI workflow, deploy script or hosting config. The deployed files have CRLF line endings while Git stores LF, which *suggests* (inference, not verified) they were uploaded from a Windows working copy (hPanel File Manager / FTP) rather than checked out by a Linux Git deploy. |
+| Main-site deploy mechanism | **Not discoverable from the repo.** It has no CI workflow, deploy script or hosting config. The deployed files have CRLF line endings while Git stores LF, which *suggests* (inference, not verified) they were uploaded from a Windows working copy (hPanel File Manager / FTP) rather than checked out by a Linux Git deploy. **Correction (found at publication, §11):** the GitHub repo *is* connected to **Vercel** (GitHub integration, configured outside the repo), which deploys every push to `main` to `silah-logistics.vercel.app`. That Vercel site is **not** `silahlogistics.com`: the domain resolves to Hostinger (`149.62.39.249`, `2a02:4780:…`, `Server: LiteSpeed`). |
 | `ship-hub` (`github.com/M-fawz/ship-hub`) | The **app** (`app.silahlogistics.com`): React/Vite, deployed by `.github/workflows/deploy-prod.yml` (push to `main` → Hostinger VPS, Docker). Its widget lives in `public/adam/` and is byte-identical to what `app.silahlogistics.com/adam/` serves. Used here only as a **read-only reference**: cloned to a temp folder, nothing changed, committed or pushed. |
 | How the app sets `site_id` | `public/adam/adam.config.js` defines `window.ADAM_CONFIG.site_id` (default `'silah'`). Both the launcher (parent page) and the client (iframe) load it, and the launcher forwards it as `?site=`. The client sends it on send, upload, fetch and close-session (`requestIdentity()`). Its README states the contract: *every request carrying session or client data sends `site_id`.* |
 | Backend | n8n at `https://srv395355.hstgr.cloud/webhook/adam/…`, shared by both sites. CORS reflects the request origin (verified for `https://silahlogistics.com` and `http://localhost:8000`). The n8n workflows were **not** inspected (no access). |
@@ -155,8 +157,8 @@ Identical for all four messages:
 | `What services does Silah provide to customers?` | "Silah Logistics provides the following services to customers: 1. Shipment Requests…" |
 | `How can I contact Silah Logistics?` | "You can contact Silah Logistics through the following channels: • Email: info@silahlogistics.com…" |
 
-Screenshots (local, this machine): conversation after B4 and the "Not delivered · Retry" state
-from B7: `C:\Users\Fawzy\AppData\Local\Temp\claude-chrome-screenshots-cfDiG0\`.
+Screenshots of the conversation after B4 and of the "Not delivered · Retry" state from B7 were
+captured during testing. They are kept on the tester's machine and are not committed to the repo.
 
 ### Production side effects of testing (synthetic data only)
 
@@ -181,17 +183,22 @@ You may want to delete or ignore this session in the ADAM operator inbox.
 | Base | `main` @ `c2b77de` (matches production) |
 | Branch | `fix/adam-main-site-site-id` |
 | Fix commit | `96b3834`: `fix(adam): send site_id so main-site chat messages are stored and answered` |
-| Report commit | the commit that adds this file (next on the same branch) |
+| Report commit | `24f6cc6`: `docs: add CHATBOT_FIX_REPORT.md for the ADAM site_id fix` |
 | Changed files | `adam/ADAM-client.html`, `adam/README.md`, `tests/adam-client.test.mjs` (new), `CHATBOT_FIX_REPORT.md` (new) |
-| Pushed / PR | **No.** Commits are local only. No push, no PR, no merge into `main`. |
+| Pushed / PR | **Yes, directly to `main` (owner-authorized fast-forward, no PR).** `c2b77de..24f6cc6`, verified on GitHub. This report's publication update is the commit right after `24f6cc6`. See §11. |
 | `ship-hub` | Not modified (read-only clone in a temp folder) |
 
 ---
 
 ## 8. Deployment status
 
-**Not deployed.** Production (`silahlogistics.com`, `www.silahlogistics.com`) still serves the old
-client, verified by `curl` after the fix was committed (0 `site_id` references).
+**Not deployed to `silahlogistics.com`.** Production (`silahlogistics.com`, `www.silahlogistics.com`)
+still serves the old client, verified by `curl` after the fix was committed **and again after the
+push to GitHub `main`** (0 `site_id` references, `Last-Modified: Wed, 22 Jul 2026`). Pushing to
+GitHub does not update Hostinger.
+
+(The push *did* auto-deploy to the separate Vercel site `silah-logistics.vercel.app`, which now
+serves the fixed client. See §11. That is not the public domain.)
 
 To deploy, only **one file** needs to reach the server, `adam/ADAM-client.html`, at
 `/adam/ADAM-client.html` (`public_html/adam/` on Hostinger, presumably). Production is otherwise
@@ -209,7 +216,7 @@ After uploading, verify:
 ## 9. Remaining issues and follow-ups
 
 1. **Deploy** `adam/ADAM-client.html` to Hostinger and run the two checks above (production
-   end-to-end has not been verified).
+   end-to-end has not been verified). The source is now on GitHub `main`; take the file from there.
 2. **Backend (separate change, not made):** the send webhook answers a request with a missing or
    unknown `site_id` with `HTTP 200` + empty body. Returning a clear `4xx` (e.g.
    `{"status":"error","error":"missing site_id"}`) would make this class of failure obvious to
@@ -235,3 +242,58 @@ The root cause is confirmed and fixed in source. The corrected client was verifi
 against the live ADAM backend: messages stored, AI replies generated and displayed, typing
 indicator cleared, no duplicates. Regression tests pass and fail correctly. The main website
 is **not yet fixed in production** until `adam/ADAM-client.html` is deployed and re-verified.
+
+---
+
+## 11. Publication to GitHub `main` (2026-10-17, verified)
+
+The repository owner authorized a direct, fast-forward-only update of `main` (no PR).
+
+### Pre-push checks
+| Check | Result |
+|---|---|
+| `origin` | `https://github.com/M-fawz/Silah_Logistics.git` (fetch + push) |
+| Working tree | clean, on `fix/adam-main-site-site-id` |
+| `origin/main` after a fresh `git fetch` | `c2b77de` (unchanged since the fix was branched) |
+| Branch relationship | `origin/main` is an ancestor of the fix branch. The branch adds exactly `96b3834` + `24f6cc6`; the remote has 0 commits the branch lacks. |
+| Diff `origin/main..fix` | exactly 4 files: `CHATBOT_FIX_REPORT.md` (A), `adam/ADAM-client.html` (M), `adam/README.md` (M), `tests/adam-client.test.mjs` (A). 722 insertions, 19 deletions. No binaries or screenshots. |
+| `git diff --check origin/main fix/adam-main-site-site-id` | clean (exit 0) |
+| Secret scan of added lines | no credentials, tokens or personal emails. Test data is synthetic only (QA name, `+1 555 010 0000`, `example.com`). |
+| `node --test tests/adam-client.test.mjs` | **11 tests, 11 pass, 0 fail** |
+
+### Push
+`git push origin fix/adam-main-site-site-id:main` (no `--force` / `--force-with-lease`):
+`c2b77de..24f6cc6  fix/adam-main-site-site-id -> main`, exit 0.
+
+### Post-push verification
+| Check | Result |
+|---|---|
+| `git ls-remote origin refs/heads/main` | `24f6cc65dbf3ae62fbecf11074c3eb97c07abd5b` |
+| `origin/main` after re-fetch | `24f6cc6`, then `96b3834`, then `c2b77de` |
+| GitHub API `commits/main` | `24f6cc65dbf3ae62fbecf11074c3eb97c07abd5b`. Commits `96b3834` and `24f6cc6` both return HTTP 200. |
+| Published files (raw.githubusercontent.com @ `24f6cc6`) | all 4 files HTTP 200 and **identical** to the local commits |
+| `adam/ADAM-client.html` on GitHub `main` | contains `const SITE_ID = 'silah';` (L689), `site_id: SITE_ID,` in the send body (L1307), `fd.append('site_id', SITE_ID)` in upload (L1267), the non-empty-body delivery check (L1321), `markSendFailed` / `clearSendFailure` |
+| Regression tests run from the **GitHub copies** | 11 tests, 11 pass, 0 fail |
+
+### CI and deployments triggered by the push
+| | Result |
+|---|---|
+| GitHub Actions | none: 0 workflows, 0 runs, 0 check-runs (the repo has no `.github/`) |
+| Commit status on `24f6cc6` | **Vercel: `success`**, "Deployment has completed" (pending at 11:21:20Z, success at 11:21:23Z UTC) |
+| GitHub deployment | environment **"Production"** (Vercel), sha `24f6cc6`. Earlier `main` pushes (`c2b77de`, `6fc1c3a`, `f5cab2f`, …) deployed the same way. |
+| `https://silah-logistics.vercel.app` | HTTP 200. `/adam/ADAM-client.html`, `/adam/launcher.js`, `/index.html`, `/js/layout.js` are **identical to `main`**, so this Vercel site now serves the fixed client. No chat messages were sent to it, to avoid more production inbox traffic. |
+| `https://silahlogistics.com` / `www` | **unchanged**: DNS resolves to Hostinger (`149.62.39.249`, `2a02:4780:1:1055:0:2224:81df:10`). `/adam/ADAM-client.html` has 0 `site_id` refs and `Last-Modified: Wed, 22 Jul 2026 13:49:44 GMT`. |
+
+This report update is committed and pushed (fast-forward) as the commit right after `24f6cc6`.
+Its push triggers another routine Vercel deployment (documentation only). n8n workflows and
+databases were not touched; `ship-hub` was not modified.
+
+### Still required from the owner
+1. Upload `adam/ADAM-client.html` (from GitHub `main`) to the Hostinger `/adam/` directory of
+   `silahlogistics.com`. Purge the hPanel/LiteSpeed cache if needed.
+2. Verify `const SITE_ID = 'silah';` is served at `https://silahlogistics.com/adam/ADAM-client.html`
+   (and `www.`), then send one live message and confirm the `v0/send` response is
+   `{"status":"ok"}` and the AI replies.
+3. Optionally delete the QA session `171026135133_6697` from the ADAM operator inbox.
+4. Optional: decide whether `silah-logistics.vercel.app` should exist publicly. It is a full
+   copy of the site with a working chat, deployed on every push to `main`.
