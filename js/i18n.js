@@ -58,7 +58,7 @@
           subtitle:
             'Silah Logistics is a smart digital marketplace that connects you with a trusted network of freight forwarders — compare, book, and ship with confidence.',
           pills: {
-            forwarders: '50+ Forwarders',
+            forwarders: '500+ Forwarders',
             countries: '100+ Countries',
             support: '24/7 Support'
           }
@@ -475,7 +475,7 @@
           subtitle:
             'صلة منصة رقمية ذكية تربطك بشبكة موثوقة من وكلاء الشحن — قارن، احجز، واشحن بثقة.',
           pills: {
-            forwarders: 'أكثر من 50 وكيل شحن',
+            forwarders: 'أكثر من 500 وكيل شحن',
             countries: 'أكثر من 100 دولة',
             support: 'دعم على مدار الساعة'
           }

@@ -68,12 +68,12 @@
       '<nav class="sidebar__nav" data-i18n-aria="sidebar.navigation">' +
         '<div class="sidebar__group">' +
           '<p class="sidebar__grouplabel" data-i18n="sidebar.quickQuote"></p>' +
-          sidebarLink('quote-start.html', 'getQuote', 'file-plus', 'sidebar.getQuote', activeNav, false) +
+          sidebarLink('https://app.silahlogistics.com/quick-quote/start', 'getQuote', 'file-plus', 'sidebar.getQuote', activeNav, false) +
         '</div>' +
         '<div class="sidebar__group">' +
           '<p class="sidebar__grouplabel" data-i18n="sidebar.navigation"></p>' +
-          sidebarLink('how-it-works.html', 'services', 'layers', 'sidebar.services', activeNav, false) +
-          sidebarLink('about.html', 'about', 'info', 'sidebar.about', activeNav, false) +
+          sidebarLink('https://app.silahlogistics.com/how-it-works', 'services', 'layers', 'sidebar.services', activeNav, false) +
+          sidebarLink('https://app.silahlogistics.com/about', 'about', 'info', 'sidebar.about', activeNav, false) +
         '</div>' +
         '<div class="sidebar__group">' +
           '<p class="sidebar__grouplabel" data-i18n="sidebar.legal"></p>' +
